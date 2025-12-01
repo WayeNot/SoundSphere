@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Index</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="/static/css/artists.css">
+    </head>
+    <body>
+        <nav>
+            <h2>Logo Groupie</h2>
+
+            <div id="navCenter">
+                <a class="navMid" href="/">Accueil</a>
+                <a class="navMid" id="activePage" href="/artists">Artistes</a>
+                <a class="navMid" href="/concert">Concerts</a>
+                <a class="navMid" href="/map">Carte</a>
+                <a class="navMid" href="/about">A propos</a>
+            </div>
+
+            <div id="navRight">
+                <input type="text" id="search" placeholder="Rechercher un artiste">
+                {{ if .Settings.DarkMode }}
+                    <a href=""><i class="fa fa-moon"></i></a>
+                {{ else }}
+                    <a href=""><i class="fa fa-sun"></i></a>
+                {{ end }}
+                <a href=""><i id="favIcon" class="fa fa-star"></i></a>
+            </div>
+        </nav>
+
+        <hr>
+
+        <p id="countArtist"></p>
+
+        <div id="divAllGroups">
+            {{range .Groups}}
+                <div class="divGroup">
+                    <a href="/artist?id={{.ID}}" class="linkGroup">
+                        <img src="{{.Image}}" class="imgGroup" alt="Image du groupe : {{.Name}}">
+                        <div class="infosGroup">
+                            <p>{{.Name}}</p>
+                            <p>{{.CreationDate}}</p>
+                        </div>
+                        <p>Voir la page -></p>
+                    </a>
+                </div>
+            {{end}}
+        </div>
+    </body>
+</html>

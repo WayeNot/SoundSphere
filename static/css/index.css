@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+CU:wght@100..400&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --violet: blueviolet;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Sour Gummy", sans-serif;
+    font-weight: 600;
+}
+
+/* NavBar ↓ */
+
+nav {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 20px; 
+    border-radius: 0 0 15px 15px;
+    margin-bottom: 50px; 
+    position: sticky;
+    top: 0;
+    background: #ffffffc6;
+    z-index: 1000;
+}
+
+a {
+    text-decoration: none; 
+    list-style-type: none;
+    color: var(--violet);
+}
+
+#navCenter {
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    font-size: 18px; 
+    text-decoration: none; 
+    list-style-type: none;
+}
+
+#navRight {
+    display: flex; 
+    align-items: center; 
+    gap: 15px;
+}
+
+#search {
+    padding: 10px; 
+    border-radius: 15px; 
+    text-align: center; 
+    font-size: 15px;
+}
+
+#favIcon {
+    color: rgb(182, 182, 15)
+}
+
