@@ -32,15 +32,20 @@
         <hr>
 
         <div style="background: #1F2730;">
-            <div style="display: flex; align-items: center; flex-direction: column; gap: 30px; padding: 15px; background: #1f27303d; width: 70%; margin: 0 auto;">
+            <div style="border: 1px solid red; display: flex; align-items: center; flex-direction: column; gap: 30px; padding: 15px; background: #1f27303d; margin: 0 auto;">
                 <h2 style="color: #FFF">Artiste aléatoire</h2>
                 <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 50px;">
                     <img src="{{.Artist.Image}}" style="width: 350px; height: 350px; border-radius: 10px;">
-                    <h1 style="color: #FFF; font-size: 40px;">{{.Artist.Name}}</h1>
-                    <a href="/artist?id={{.ID}}">Voir la page de l'artiste</a>
+                    <div style="display: flex; align-items: center; flex-direction: column; gap: 10px; color: #FFF;">
+                        <h1 style="color: #FFF; font-size: 40px;">{{.Artist.Name}}</h1>
+                        <a style="list-style-type: none; text-decoration: none; color: #FFF;" href="/artist?id={{.Artist.ID}}">Voir la page -></a>
+                    </div>
                 </div>
             </div>
         </div>
         <a href="/">Tirer un artiste aléatoire</a>
     </body>
+    <footer>
+        <h2 style="background: blueviolet; color: #FFF; padding: 10px; text-align: center; position: fixed; bottom: 0; width: 100%;">Copyright © 2025 - Tous droits réservés par Noham, Emilien, Tim & Aymeric</h2>
+    </footer>
 </html>

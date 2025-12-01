@@ -41,9 +41,11 @@ func ManageApi() ([]Group, error) {
 	const apiURL = "https://groupietrackers.herokuapp.com/api/artists"
 
 	resp, err := http.Get(apiURL)
+	
 	if err != nil {
 		return nil, err
 	}
+
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
