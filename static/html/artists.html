@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <title>Index</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="/static/css/base.css">
+        <link rel="stylesheet" href="/static/css/nav.css">
         <link rel="stylesheet" href="/static/css/artists.css">
     </head>
     <body>
@@ -11,8 +13,8 @@
             <img style="height: 120px;" src="https://media.discordapp.net/attachments/1415075036745961666/1444955075784081529/SoundSphereLightLogo.png?ex=692e96c8&is=692d4548&hm=1c83ef361571e421d8e04ea8fdc0008b69e7854eb609aeb6b3c838d00a8f0790&=&format=webp&quality=lossless&width=1537&height=838" alt="">
 
             <div id="navCenter">
-                <a class="navMid" id="activePage" href="/">Accueil</a>
-                <a class="navMid" href="/artists">Artistes</a>
+                <a class="navMid" href="/">Accueil</a>
+                <a class="navMid" id="activePage" href="/artists">Artistes</a>
                 <a class="navMid" href="/concert">Concerts</a>
                 <a class="navMid" href="/map">Carte</a>
                 <a class="navMid" href="/about">A propos</a>
@@ -48,6 +50,7 @@
         </div>
     </body>
     <footer>
-        <h2 style="background: blueviolet; color: #FFF; padding: 10px; text-align: center; position: fixed; bottom: 0; width: 100%;">Copyright © 2025 - Tous droits réservés par Noham, Emilien, Tim & Aymeric</h2>
+        <h2 class="footerText">Copyright © 2025 - Tous droits réservés par Noham, Emilien, Tim & Aymeric</h2>
     </footer>
+    <script>history.replaceState("", "", "SoundSphère");</script>
 </html>
