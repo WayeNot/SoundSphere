@@ -8,7 +8,7 @@
     </head>
     <body>
         <nav>
-            <h2>Logo Groupie</h2>
+            <img style=" height: 100px;" src="https://media.discordapp.net/attachments/1415075036745961666/1444955075784081529/SoundSphereLightLogo.png?ex=692e96c8&is=692d4548&hm=1c83ef361571e421d8e04ea8fdc0008b69e7854eb609aeb6b3c838d00a8f0790&=&format=webp&quality=lossless&width=1537&height=838" alt="">
 
             <div id="navCenter">
                 <a class="navMid" id="activePage" href="/">Accueil</a>
@@ -31,6 +31,16 @@
 
         <hr>
 
-        <h2>Artiste aléatoire</h2>
+        <div style="background: #1F2730;">
+            <div style="display: flex; align-items: center; flex-direction: column; gap: 30px; padding: 15px; background: #1f27303d; width: 70%; margin: 0 auto;">
+                <h2 style="color: #FFF">Artiste aléatoire</h2>
+                <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 50px;">
+                    <img src="{{.Artist.Image}}" style="width: 350px; height: 350px; border-radius: 10px;">
+                    <h1 style="color: #FFF; font-size: 40px;">{{.Artist.Name}}</h1>
+                    <a href="/artist?id={{.ID}}">Voir la page de l'artiste</a>
+                </div>
+            </div>
+        </div>
+        <a href="/">Tirer un artiste aléatoire</a>
     </body>
 </html>
