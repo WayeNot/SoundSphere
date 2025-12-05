@@ -4,13 +4,13 @@
         <meta charset="UTF-8">
         <title>Index</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="/static/css/base.css">
-        <link rel="stylesheet" href="/static/css/nav.css">
+        <link rel="stylesheet" href="/static/css/util.css">
         <link rel="stylesheet" href="/static/css/index.css">
+
     </head>
     <body>
         <nav>
-            <img style="height: 120px;" src="https://media.discordapp.net/attachments/1415075036745961666/1444955075784081529/SoundSphereLightLogo.png?ex=692e96c8&is=692d4548&hm=1c83ef361571e421d8e04ea8fdc0008b69e7854eb609aeb6b3c838d00a8f0790&=&format=webp&quality=lossless&width=1537&height=838" alt="">
+            <img id="imgNav" src="https://media.discordapp.net/attachments/1415075036745961666/1445319989371604992/SoundSphereLightLogo-removebg-preview.png?ex=6933df22&is=69328da2&hm=e65d7156289063dd37350990594692ae5dfd63f02d7f97ab615a12347fd69003&=&format=webp&quality=lossless&width=745&height=406" alt="Logo de SoundSphère">
 
             <div id="navCenter">
                 <a class="navMid" id="activePage" href="/">Accueil</a>
@@ -30,30 +30,35 @@
             </div>
         </nav>
 
-        <div style="background: #1F2730;">
-            <div style="display: flex; align-items: center; flex-direction: column; gap: 30px; padding: 15px; background: #1f27303d; margin: 0 auto;">
-                <h2 style="color: #FFF">Artiste aléatoire</h2>
-                <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 50px;">
-                    <img src="{{.Artist.Image}}" style="width: 350px; height: 350px; border-radius: 10px;">
-                    <div style="display: flex; align-items: center; flex-direction: column; gap: 10px; color: #FFF;">
-                        <h1 style="color: #FFF; font-size: 40px;">{{.Artist.Name}}</h1>
-                        <a style="list-style-type: none; text-decoration: none; color: #FFF;" href="/artist?id={{.Artist.ID}}">Voir la page -></a>
+        <header>
+            <div id="divTextHeader">
+                <h2>SoundSphère</h2>
+                <p>Le monde des artistes, en un lieu.</p>
+            </div>
+            <div>
+                <a class="ctaBtn"  href="/artists">Voir tous les artistes -></a>
+                <a class="ctaBtn" href="/concert">Les prochains concerts -></a>
+            </div>
+        </header>
+
+        <div id="firstDiv">
+            <div id="randomArtistContainer">
+                <h2 class="sectionTitle">Artiste aléatoire</h2>
+
+                <div id="randomArtistContent">
+                    <img src="{{.Artist.Image}}" id="coverArtist">
+
+                    <div id="artistInfo">
+                        <h1 id="artistName">{{.Artist.Name}}</h1>
+
+                        <div id="artistButtons">
+                            <a class="ctaBtn" href="/artist?id={{.Artist.ID}}">Voir la page -></a>
+                            <a class="ctaBtn" href="/">Tirer un artiste aléatoire</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <a href="/">Tirer un artiste aléatoire</a>
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 30px;">
-            <div class="secExplore">
-                <h2>Voir les prochains concerts</h2>
-                <img style="height: 350px; width: 550px; border-radius: 15px;" src="https://media.istockphoto.com/id/1806011581/fr/photo/des-jeunes-gens-heureux-et-ravis-de-danser-de-sauter-et-de-chanter-pendant-le-concert-de-leur.jpg?s=612x612&w=0&k=20&c=d1GQ5j33_Ie7DBUM0gTxQcaPhkEIQxkBlWO0TLNPB8M=" alt="">
-            </div>
-            <div class="secExplore">
-                <img style="height: 350px; width: 550px; border-radius: 15px;" src="https://media.istockphoto.com/id/1806011581/fr/photo/des-jeunes-gens-heureux-et-ravis-de-danser-de-sauter-et-de-chanter-pendant-le-concert-de-leur.jpg?s=612x612&w=0&k=20&c=d1GQ5j33_Ie7DBUM0gTxQcaPhkEIQxkBlWO0TLNPB8M=" alt="">
-                <h2>Voir les prochains concerts</h2>
-            </div>
-        </div>
-
     </body>
     <footer>
         <h2 class="footerText">Copyright © 2025 - Tous droits réservés par Noham, Emilien, Tim & Aymeric</h2>

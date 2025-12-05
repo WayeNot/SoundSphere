@@ -1,5 +1,131 @@
+:root {
+    --violet: #E4B8C9;
+}
+
+header {
+    position: relative;
+    background: url("https://cdn.discordapp.com/attachments/1415075036745961666/1446409586524422276/la-lumiere-de-scene-rougeoyante-illumine-les-fans-de-rock-en-liesse-generes-par-l-ia.jpg?ex=6933e166&is=69328fe6&hm=2c47085c493559044b51e30a51f82f5e38ac22a45669166c8a8e2d608c141641&") center/cover;
+    width: 100%;
+    height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 75px;
+}
+
+header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 1; 
+}
+
+header > * {
+    position: relative;
+    z-index: 2;
+}
+
+#divTextHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#divTextHeader p, #divTextHeader h2 {
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+    color: var(--violet);
+}
+
+#divTextHeader h2 {
+    font-size: 50px;
+    font-style: italic;
+}
+
+#divTextHeader p {
+    font-size: 20px;
+}
+
+#firstDiv {
+    background: #1E2430;
+    padding: 50px;
+}
+
+#randomArtistContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    padding: 15px;
+    background: #1f27303d;
+    margin: 0 auto;
+}
+
+.sectionTitle {
+    color: #FFF;
+}
+
+#randomArtistContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 50px;
+}
+
+#coverArtist {
+    width: 350px;
+    height: 350px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+#artistInfo {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    color: #FFF;
+}
+
+#artistName {
+    color: #FFF;
+    font-size: 40px;
+}
+
+#artistButtons {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    padding-top: 25px;
+}
+
 .secExplore {
     display: flex; 
     align-items: center;
+    justify-content: space-between;
     gap: 25px;
+    width: 50%;
+}
+
+#coverArtist {
+    padding-top: 45px;
+    animation: rotate 20s linear infinite, morph 6s ease-in-out infinite;
+    transform: rotateX('angle');
+}
+
+@keyframes rotate {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes morph {
+    0%   { border-radius: 50%; }
+    33%  { border-radius: 20%; }
+    66%  { border-radius: 30%; }
+    100% { border-radius: 50%; }
 }

@@ -24,10 +24,6 @@ type Settings struct {
 	DarkMode bool
 }
 
-type GroupID struct {
-	ID int `json:"id"`
-}
-
 type Group struct {
 	ID           int      `json:"id"`
 	Image        string   `json:"image"`
@@ -41,11 +37,9 @@ func ManageApi() ([]Group, error) {
 	const apiURL = "https://groupietrackers.herokuapp.com/api/artists"
 
 	resp, err := http.Get(apiURL)
-	
 	if err != nil {
 		return nil, err
 	}
-
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
@@ -54,123 +48,79 @@ func ManageApi() ([]Group, error) {
 	}
 
 	var groups []Group
-	if err := json.Unmarshal(body, &groups); err != nil {
-		return nil, err
-	}
-
-	return groups, nil
+	err = json.Unmarshal(body, &groups)
+	return groups, err
 }
 
 func DefaultSettings() Settings {
-	return Settings {
-		DarkMode: true,
+	return Settings{DarkMode: true}
+}
+
+func (app *PageData) findArtistByID(id int) *Group {
+	for _, g := range app.Groups {
+		if g.ID == id {
+			return &g
+		}
+	}
+	return nil
+}
+
+func renderTemplate(w http.ResponseWriter, file string, data any) {
+	tmpl, err := template.ParseFiles("./static/html/" + file + ".html")
+	if err != nil {
+		http.Error(w, "Template error : "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+	tmpl.Execute(w, data)
+}
+
+func (app *PageData) DisplayPage(name string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		renderTemplate(w, name, PageData{
+			Groups:   app.Groups,
+			Settings: app.Settings,
+		})
 	}
 }
 
-func (app *PageData) DisplayPage(templateName string) http.HandlerFunc {
+func (app *PageData) DisplayArtist(random bool) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		data := PageData{
-			Groups:   app.Groups,
-			Settings: app.Settings,
+		if random {
+			randomIndex := rand.Intn(len(app.Groups))
+			artist := app.Groups[randomIndex]
 
-		}
-
-		tmpl, err := template.ParseFiles("./static/html/" + templateName + ".html")
-
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			renderTemplate(w, "index", PageArtist{
+				Artist:   artist,
+				Settings: app.Settings,
+			})
 			return
 		}
 
-		tmpl.Execute(w, data)
-	}
-}
-
-func (app *PageData) DisplayArtist(GetRandom bool) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if GetRandom {
-			idStr := fmt.Sprint(rand.Intn(len(app.Groups)))
-
-			if idStr == "" {
-				http.Error(w, "Missing id", http.StatusBadRequest)
-				return
-			}
-
-			var id int
-			fmt.Sscanf(idStr, "%d", &id)
-
-			var found *Group
-			for _, g := range app.Groups {
-				if g.ID == id {
-					found = &g
-					break
-				}
-			}
-
-			if found == nil {
-				http.NotFound(w, r)
-				return
-			}
-
-			data := PageArtist{
-				Artist:   *found,
-				Settings: app.Settings,
-			}
-
-			tmpl, err := template.ParseFiles("./static/html/index.html")
-
-			if err != nil {
-				http.Error(w, err.Error(), 500)
-				return
-			}
-
-			tmpl.Execute(w, data)
-		} else {
-			idStr := r.URL.Query().Get("id")
-
-			if idStr == "" {
-				http.Error(w, "Missing id", http.StatusBadRequest)
-				return
-			}
-
-			var id int
-			fmt.Sscanf(idStr, "%d", &id)
-
-			var found *Group
-			for _, g := range app.Groups {
-				if g.ID == id {
-					found = &g
-					break
-				}
-			}
-
-			if found == nil {
-				http.NotFound(w, r)
-				return
-			}
-
-			data := PageArtist{
-				Artist:   *found,
-				Settings: app.Settings,
-			}
-
-			tmpl, err := template.ParseFiles("./static/html/artist.html")
-
-			if err != nil {
-				http.Error(w, err.Error(), 500)
-				return
-			}
-
-			tmpl.Execute(w, data)
+		idStr := r.URL.Query().Get("id")
+		if idStr == "" {
+			http.Error(w, "Missing ID", http.StatusBadRequest)
+			return
 		}
+
+		var id int
+		fmt.Sscanf(idStr, "%d", &id)
+
+		artist := app.findArtistByID(id)
+		if artist == nil {
+			http.NotFound(w, r)
+			return
+		}
+
+		renderTemplate(w, "artist", PageArtist{
+			Artist:   *artist,
+			Settings: app.Settings,
+		})
 	}
 }
 
 func main() {
-
 	groups, err := ManageApi()
-
 	if err != nil {
 		log.Fatal("Erreur API :", err)
 	}

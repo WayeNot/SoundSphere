@@ -1,6 +1,11 @@
+:root {
+    --violet: #E4B8C9;
+}
+
 /* Div artiste */
 
 #divAllGroups {
+    background: #1E2430;
     display: flex; 
     align-items: center; 
     justify-content: left;
@@ -9,18 +14,20 @@
     padding: 10px;
     margin: 0 auto;
     width: fit-content;
-    border: 1px solid red;
+    border: none;
 }
 
 .divGroup {
+    background: #2C3442;
     display: flex; 
     align-items: center; 
     justify-content: center; 
+    flex-direction: column;
     flex-wrap: wrap; 
     gap: 20px; 
-    width: 10%;
+    width: 13%;
     height: 250px;
-    border: 2px solid var(--violet);
+    color: var(--violet);
     border-radius: 20%;
     padding: 13px;
 }
@@ -30,7 +37,7 @@
     height: 150px; 
     background-size: cover; 
     background-position: center;
-    border: 1px solid var(--violet);
+    border: 2px solid var(--violet);
     border-radius: 40%; 
     transition: transform 4s linear, border-radius 1s ease;
     transform: rotate(0deg);
@@ -56,3 +63,6 @@
     gap: 15px;
 }
 
+#artistName {
+    font-style: 14px;
+}

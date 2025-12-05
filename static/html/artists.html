@@ -4,14 +4,13 @@
         <meta charset="UTF-8">
         <title>Index</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="/static/css/base.css">
-        <link rel="stylesheet" href="/static/css/nav.css">
+        <link rel="stylesheet" href="/static/css/util.css">
         <link rel="stylesheet" href="/static/css/artists.css">
     </head>
     <body>
         <nav>
-            <img style="height: 120px;" src="https://media.discordapp.net/attachments/1415075036745961666/1444955075784081529/SoundSphereLightLogo.png?ex=692e96c8&is=692d4548&hm=1c83ef361571e421d8e04ea8fdc0008b69e7854eb609aeb6b3c838d00a8f0790&=&format=webp&quality=lossless&width=1537&height=838" alt="">
-
+            <img id="imgNav" src="https://media.discordapp.net/attachments/1415075036745961666/1445319989371604992/SoundSphereLightLogo-removebg-preview.png?ex=6933df22&is=69328da2&hm=e65d7156289063dd37350990594692ae5dfd63f02d7f97ab615a12347fd69003&=&format=webp&quality=lossless&width=745&height=406" alt="Logo de SoundSphère">
+            
             <div id="navCenter">
                 <a class="navMid" href="/">Accueil</a>
                 <a class="navMid" id="activePage" href="/artists">Artistes</a>
@@ -30,21 +29,17 @@
             </div>
         </nav>
 
-        <hr>
-
-        <p id="countArtist"></p>
-
         <div id="divAllGroups">
             {{range .Groups}}
                 <div class="divGroup">
-                    <a href="/artist?id={{.ID}}" class="linkGroup">
+                    <div class="linkGroup">
                         <img src="{{.Image}}" class="imgGroup" alt="Image du groupe : {{.Name}}">
                         <div class="infosGroup">
-                            <p>{{.Name}}</p>
+                            <p id="artistName">{{.Name}}</p>
                             <p>{{.CreationDate}}</p>
                         </div>
-                        <p>Voir la page -></p>
-                    </a>
+                        <a href="/artist?id={{.ID}}" class="ctaViewPage">Voir la page -></a>
+                    </div>
                 </div>
             {{end}}
         </div>

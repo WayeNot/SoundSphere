@@ -1,8 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Playwrite+CU:wght@100..400&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 
 :root {
-    --violet: blueviolet;
+    --violet: #E4B8C9;
 }
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Audiowide", sans-serif;
+    font-weight: 600;
+}
+
+*:not(.ctaBtn) {
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.623);
+}
+
+.ctaBtn {
+    -webkit-text-stroke: 0 !important;
+}
+
+/* NavBar ↓ */
 
 nav {
     display: flex; 
@@ -10,7 +28,6 @@ nav {
     justify-content: space-between; 
     padding: 20px; 
     border-radius: 0 0 15px 15px;
-    margin-bottom: 50px; 
     position: sticky;
     top: 0;
     background: #ffffffc6;
@@ -43,6 +60,13 @@ a {
     border-radius: 15px; 
     text-align: center; 
     font-size: 15px;
+    border: 3px solid var(--violet);
+    color: var(--violet);
+    outline: none;
+}
+
+#search::placeholder {
+    color: var(--violet);
 }
 
 #favIcon {
@@ -55,7 +79,7 @@ a {
 }
 
 .footerText {
-    background: blueviolet; 
+    background: var(--violet); 
     color: #FFF; 
     padding: 10px; 
     text-align: center; 
@@ -63,5 +87,30 @@ a {
     bottom: 0;
     left: 0;
     right: 0;
-    margin-top: 50px;
+}
+
+#imgNav {
+    height: 120px;
+}
+
+.ctaBtn {
+    list-style-type: none;
+    text-decoration: none;
+    background: #FFF;
+    color: var(--violet);
+    padding: 10px 20px 10px 20px;
+    border-radius: 12px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.ctaViewPage {
+    list-style-type: none;
+    text-decoration: none;
+    background: #FFF;
+    color: var(--violet);
+    padding: 5px 8px 5px 8px;
+    border-radius: 12px;
+    font-size: 15px;
+    text-align: center;
 }
