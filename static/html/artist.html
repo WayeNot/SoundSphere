@@ -10,7 +10,7 @@
     </head>
     <body>
         <nav>
-            <img style="height: 120px;" src="https://cdn.discordapp.com/attachments/1415075036745961666/1445319989371604992/SoundSphereLightLogo-removebg-preview.png?ex=692feaa2&is=692e9922&hm=2b85c0aa9db72147cdebd64d046d83c5d15f9e0556def789e79d10c53a12d0e9&" alt="">
+            <div id="imgNav"></div>
 
             <div id="navCenter">
                 <a class="navMid" id="activePage" href="/">Accueil</a>
@@ -21,7 +21,6 @@
             </div>
 
             <div id="navRight">
-                <input type="text" id="search" placeholder="Rechercher un artiste">
                 {{ if .Settings.DarkMode }}
                     <a href=""><i class="fa fa-moon"></i></a>
                 {{ else }}
@@ -38,7 +37,6 @@
                 </div>
             </div>
         </div>
-
 
         <p>Année de création : {{.Artist.CreationDate}}</p>
         <p>Premier album : {{.Artist.FirstAlbum}}</p>

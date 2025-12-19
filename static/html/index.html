@@ -10,7 +10,7 @@
     </head>
     <body>
         <nav>
-            <img id="imgNav" src="https://media.discordapp.net/attachments/1415075036745961666/1445319989371604992/SoundSphereLightLogo-removebg-preview.png?ex=6933df22&is=69328da2&hm=e65d7156289063dd37350990594692ae5dfd63f02d7f97ab615a12347fd69003&=&format=webp&quality=lossless&width=745&height=406" alt="Logo de SoundSphère">
+            <div id="imgNav"></div>
 
             <div id="navCenter">
                 <a class="navMid" id="activePage" href="/">Accueil</a>
@@ -21,7 +21,7 @@
             </div>
 
             <div id="navRight">
-                <input type="text" id="search" placeholder="Rechercher un artiste">
+                <!-- <input type="text" id="search" placeholder="Rechercher un artiste"> -->
                 {{ if .Settings.DarkMode }}
                     <a href=""><i class="fa fa-moon"></i></a>
                 {{ else }}

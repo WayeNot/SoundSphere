@@ -9,11 +9,11 @@
     </head>
     <body>
         <nav>
-            <img id="imgNav" src="https://media.discordapp.net/attachments/1415075036745961666/1445319989371604992/SoundSphereLightLogo-removebg-preview.png?ex=6933df22&is=69328da2&hm=e65d7156289063dd37350990594692ae5dfd63f02d7f97ab615a12347fd69003&=&format=webp&quality=lossless&width=745&height=406" alt="Logo de SoundSphère">
-            
+            <div id="imgNav"></div>
+
             <div id="navCenter">
-                <a class="navMid" href="/">Accueil</a>
-                <a class="navMid" id="activePage" href="/artists">Artistes</a>
+                <a class="navMid" id="activePage" href="/">Accueil</a>
+                <a class="navMid" href="/artists">Artistes</a>
                 <a class="navMid" href="/concert">Concerts</a>
                 <a class="navMid" href="/map">Carte</a>
                 <a class="navMid" href="/about">A propos</a>
@@ -29,19 +29,34 @@
             </div>
         </nav>
 
-        <div id="divAllGroups">
-            {{range .Groups}}
-                <div class="divGroup">
-                    <div class="linkGroup">
-                        <img src="{{.Image}}" class="imgGroup" alt="Image du groupe : {{.Name}}">
-                        <div class="infosGroup">
-                            <p id="artistName">{{.Name}}</p>
-                            <p>{{.CreationDate}}</p>
-                        </div>
-                        <a href="/artist?id={{.ID}}" class="ctaViewPage">Voir la page -></a>
-                    </div>
+        <div>
+            <div id="filterBar">
+                <h2>Tous les artistes</h2>
+                <div>
+                    <label for="filterArtist">Filtrer par</label>
+
+                    <select name="filterArtist" id="filterArtist">
+                        <option value="volvo">Ordre alphabétique ( A - Z )</option>
+                        <option value="saab">Ordre alphabétique ( Z - A )</option>
+                        <option value="volvo">Date de création ( Plus vieux - moins vieux )</option>
+                        <option value="saab">Date de création ( Moins vieux - plus vieux )</option>
+                    </select>
                 </div>
-            {{end}}
+            </div>
+            <div id="divAllGroups">
+                {{range .Groups}}
+                    <div class="divGroup">
+                        <div class="linkGroup">
+                            <img src="{{.Image}}" class="imgGroup" alt="Image du groupe : {{.Name}}">
+                            <div class="infosGroup">
+                                <p id="artistName">{{.Name}}</p>
+                                <p>{{.CreationDate}}</p>
+                            </div>
+                            <a href="/artist?id={{.ID}}" class="ctaViewPage">Voir la page -></a>
+                        </div>
+                    </div>
+                {{end}}
+            </div>
         </div>
     </body>
     <footer>

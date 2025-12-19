@@ -22,6 +22,12 @@
 
 /* NavBar ↓ */
 
+#imgNav {
+    height: 120px;
+    width: 250px;
+    background: url("../img/SoundSphereDarkNoBg.png") center/cover;
+}
+
 nav {
     display: flex; 
     align-items: center; 
@@ -87,10 +93,6 @@ a {
     bottom: 0;
     left: 0;
     right: 0;
-}
-
-#imgNav {
-    height: 120px;
 }
 
 .ctaBtn {
