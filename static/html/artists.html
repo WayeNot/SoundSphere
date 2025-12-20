@@ -12,8 +12,8 @@
             <div id="imgNav"></div>
 
             <div id="navCenter">
-                <a class="navMid" id="activePage" href="/">Accueil</a>
-                <a class="navMid" href="/artists">Artistes</a>
+                <a class="navMid" href="/">Accueil</a>
+                <a class="navMid" id="activePage" href="/artists">Artistes</a>
                 <a class="navMid" href="/concert">Concerts</a>
                 <a class="navMid" href="/map">Carte</a>
                 <a class="navMid" href="/about">A propos</a>
@@ -47,7 +47,7 @@
                 {{range .Groups}}
                     <div class="divGroup">
                         <div class="linkGroup">
-                            <img src="{{.Image}}" class="imgGroup" alt="Image du groupe : {{.Name}}">
+                            <img src="{{if .Thumb }} {{ .Thumb }} {{ else }} {{ .Image }} {{ end }}" class="imgGroup" alt="Image du groupe : {{.Name}}">
                             <div class="infosGroup">
                                 <p id="artistName">{{.Name}}</p>
                                 <p>{{.CreationDate}}</p>
@@ -60,7 +60,6 @@
         </div>
     </body>
     <footer>
-        <h2 class="footerText">Copyright © 2025 - Tous droits réservés par Noham, Emilien, Tim & Aymeric</h2>
+        <h2 class="footerText">Copyright © 2025 - Tous droits réservés par Emilien, Tim & Aymeric</h2>
     </footer>
-    <script>history.replaceState("", "", "SoundSphère");</script>
 </html>

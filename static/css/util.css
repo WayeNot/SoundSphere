@@ -20,11 +20,15 @@
     -webkit-text-stroke: 0 !important;
 }
 
+.ctaBtn:hover {
+    cursor: pointer;
+}
+
 /* NavBar ↓ */
 
 #imgNav {
-    height: 120px;
-    width: 250px;
+    height: 100px;
+    width: 200px;
     background: url("../img/SoundSphereDarkNoBg.png") center/cover;
 }
 
@@ -33,10 +37,9 @@ nav {
     align-items: center; 
     justify-content: space-between; 
     padding: 20px; 
-    border-radius: 0 0 15px 15px;
     position: sticky;
     top: 0;
-    background: #ffffffc6;
+    background: #1E2430;
     z-index: 1000;
 }
 
