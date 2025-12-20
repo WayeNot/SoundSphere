@@ -1,5 +1,3 @@
----
-
 # 🎧 SoundSphère
 
 > **SoundSphère** est une application web interactive qui centralise les informations essentielles sur des artistes et groupes musicaux :
@@ -133,5 +131,3 @@ Projet réalisé par :
 ## 📜 Licence
 
 Copyright © 2025 - Tous droits réservés par Émilien, Tim & Aymeric
-
----
