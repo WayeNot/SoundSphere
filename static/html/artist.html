@@ -30,51 +30,61 @@
         </nav>
 
         <div style="background: #1F2730;">
-            {{ if .Artist.Banner}}
                 <div style="padding-top: 30px;"></div>
-                <img src="{{.Artist.Banner}}" style="width: 100%; height: 300px;" alt="">
+            {{ if .Artist.Banner}}
+                <img src="{{.Artist.Banner}}" id="bannerArtist" alt="">
+            {{ else }}
+                <div id="headerArtist"></div>
             {{ end }}
-            <div style="padding: 15px; background: #1f27303d; width: 50%; margin: 0 auto;">
-                <hr style="width: 50%; margin: 50px auto;">
-                <div style="display: flex; align-items: center; height: 200px; justify-content: center; gap: 50px;">
-                    <img src="{{if .Artist.Thumb }} {{ .Artist.Thumb }} {{ else }} {{ .Artist.Image }} {{ end }}" alt="Image du groupe : {{ .Artist.Name }}" style="width: 150px; height: 100%; border-radius: 10px;">
-                    <div style="color: #FFF; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+            <div id="divPresArtist">
+                <hr id="firstSep">
+                <div id="divInfoArtist">
+                    <img id="logoArtist" src="{{if .Artist.Thumb }} {{ .Artist.Thumb }} {{ else }} {{ .Artist.Image }} {{ end }}" alt="Image du groupe : {{ .Artist.Name }}">
+                    <div id="divInfoArtist2">
                         <div>
-                            <h1 style="margin-bottom: 15px;">{{.Artist.Name}}</h1>
-                            <p><strong>Genre :</strong> {{.Artist.Genre}}</p>
-                            <p><strong>Pays :</strong> {{.Artist.Country}}</p>
-                            <p><strong>Année de création :</strong> {{.Artist.CreationDate}}</p>
+                            <h1 id="artistName">{{.Artist.Name}}</h1>
+                            <div id="infoArtist">
+                                <p>🎵 <span>Genre</span> : {{ .Artist.Genre }}</p>
+                                <p>🌍 <span>Pays</span> : {{ .Artist.Country }}</p>
+                                <p>📅 <span>Création</span> : {{ .Artist.CreationDate }}</p>
+                                <p>💿 <span>Premier album</span> : {{ .Artist.FirstAlbum }}</p>
+                            </div>
                         </div>
-                        <hr style="width: 60%; margin: 30px auto 0 auto">
-                        <div id="divSocialMedia">
-                            {{ if .Artist.Youtube }}
-                                <a href="{{ .Artist.Youtube }}" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-                            {{ end }}
-                            {{ if .Artist.Instagram }}
-                                <a href="{{ .Artist.Instagram }}" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                            {{ end }}
+                        {{ if or .Artist.Youtube .Artist.Instagram .Artist.Facebook .Artist.Website }}
+                            <hr id="secondSep">
+                            <div id="divSocialMedia">
+                                {{ if .Artist.Youtube }}
+                                    <a href="{{ .Artist.Youtube }}" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                                {{ end }}
+                                {{ if .Artist.Instagram }}
+                                    <a href="{{ .Artist.Instagram }}" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                                {{ end }}
 
-                            {{ if .Artist.Facebook }}
-                                <a href="http://{{ .Artist.Facebook }}" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-                            {{ end }}
-                            {{ if .Artist.Website }}
-                                <a href="{{ .Artist.Website }}" target="_blank"><i class="fa fa-globe"></i></a>
-                            {{ end }}
-                        </div>
+                                {{ if .Artist.Facebook }}
+                                    <a href="http://{{ .Artist.Facebook }}" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                                {{ end }}
+                                {{ if .Artist.Website }}
+                                    <a href="{{ .Artist.Website }}" target="_blank"><i class="fa fa-globe"></i></a>
+                                {{ end }}
+                            </div>
+                        {{ else }}
+                            <hr id="thirdSep">
+                            <p class="noData">Aucun réseaux sociaux !</p>
+                        {{ end }}
                     </div>
                 </div>
-                <hr style="width: 50%; margin: 50px auto;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 30px; text-align: center;">
+                <hr id="fourthSep">
+                <div id="divBio">
                     {{ if .Artist.BiographyFR }}
                         <button class="ctaBtn" id="btnSeeBio" onclick="viewBiographie()">Voir la biographie</button>
                     {{ else }}
-                        <p style="color: #FFF;">Aucune biographie pour cet artiste !</p>
+                        <p class="noData">Aucune biographie pour cet artiste !</p>
                     {{ end }}
                 </div>
 
-                <hr style="width: 50%; margin: 50px auto;">
+                <hr id="fifthSep">
 
-                <div style="padding: 20px; text-align: center; color: #FFF;">
+                <div id="divConcert" style="">
                     <h2>Prochains concerts</h2>
                     {{ if .Artist.Concerts }}
                         <ul>
@@ -114,6 +124,7 @@
         </script>
     </body>
     <footer>
-        <h2 class="footerText">Copyright © 2025 - Tous droits réservés par Emilien, Tim & Aymeric</h2>
+        <h2 class="footerText">Copyright © 2025 - Tous droits réservés par Émilien, Tim & Aymeric</h2>
     </footer>
+    <script>history.replaceState("", "", "SoundSphère");</script>
 </html>

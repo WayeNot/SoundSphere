@@ -33,7 +33,6 @@
             <div id="filterBar">
                 <h2>Tous les artistes</h2>
                 <div>
-
                     <select name="filterArtist" id="filterArtist">
                         <option value="">Aucun filtre</option>
                         <option value="alphaAZ">Ordre alphabétique ( A - Z )</option>
@@ -43,6 +42,7 @@
                     </select>
                 </div>
             </div>
+            <hr style="width: 70%; margin: 0 auto;">
             <div id="divAllGroups">
                 {{range .Groups}}
                     <div class="divGroup">
@@ -60,6 +60,7 @@
         </div>
     </body>
     <footer>
-        <h2 class="footerText">Copyright © 2025 - Tous droits réservés par Emilien, Tim & Aymeric</h2>
+        <h2 class="footerText">Copyright © 2025 - Tous droits réservés par Émilien, Tim & Aymeric</h2>
     </footer>
+    <script>history.replaceState("", "", "SoundSphère");</script>
 </html>

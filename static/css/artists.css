@@ -64,9 +64,11 @@
 }
 
 #artistName {
-    font-style: 14px;
+    font-style: 12px;
 }
 
 #filterBar {
     background: #1E2430;
+    display: flex;
+    align-items: center;
 }

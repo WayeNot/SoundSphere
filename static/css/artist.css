@@ -1,3 +1,118 @@
+#bannerArtist {
+    width: 100%; 
+    height: 300px;
+}
+
+#headerArtist {
+    background: url("../img/concert.jpg") center/cover;
+    width: 100%;
+    height: 300px;
+}
+
+#divPresArtist {
+    padding: 15px; 
+    background: #1f27303d; 
+    width: 50%; 
+    margin: 0 auto;
+}
+
+#firstSep {
+    width: 70%; 
+    margin: 50px auto;
+}
+
+#divInfoArtist {
+    display: flex; 
+    align-items: center; 
+    height: 200px; 
+    justify-content: center; 
+    gap: 50px;
+}
+
+#logoArtist {
+    width: 200px; 
+    height: 200px; 
+    border-radius: 25%;
+}
+
+#divInfoArtist2 {
+    color: #FFF; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center;
+}
+
+#artistName {
+    margin-bottom: 15px;
+}
+
+#infoArtist {
+    color: #fff;
+    font-size: 15px;
+    margin: 6px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#infoArtist span {
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+#secondSep {
+    width: 100%; 
+    margin: 30px auto 0 auto
+}
+
+#divSocialMedia {
+    display: flex; 
+    gap: 20px; 
+    margin-top: 20px;
+}
+
+#divSocialMedia i {
+    border: 2px solid #E4B8C9; 
+    padding: 10px; 
+    border-radius: 35%;
+}
+
+#thirdSep {
+    width: 100%; 
+    margin: 15px auto;
+}
+
+.noData {
+    color: #FFF;
+}
+
+#fourthSep {
+    width: 70%; 
+    margin: 50px auto;
+}
+
+#divBio {
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 30px; 
+    text-align: center;
+}
+
+#fifthSep {
+    width: 40%; 
+    margin: 50px auto;
+}
+
+#divConcert {
+    padding: 20px; 
+    text-align: center; 
+    color: #FFF;
+}
+
 #bioOverlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -27,16 +142,4 @@
 
 #bioContent {
     padding: 30px 0;
-}
-
-#divSocialMedia {
-    display: flex; 
-    gap: 20px; 
-    margin-top: 20px;
-}
-
-#divSocialMedia i {
-    border: 2px solid #E4B8C9; 
-    padding: 10px; 
-    border-radius: 35%;
 }
