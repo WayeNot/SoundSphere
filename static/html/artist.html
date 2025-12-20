@@ -47,6 +47,25 @@
                 <li>{{.}}</li>
             {{end}}
         </ul>
+        <hr>
+        <h1>{{.Artist.Name}}</h1>
+        <p>{{.AudioDB.BiographyFR}}</p>
+
+        {{if .AudioDB}}
+            <p><strong>Genre :</strong> {{.AudioDB.Genre}}</p>
+            <p><strong>Pays :</strong> {{.AudioDB.Country}}</p>
+
+            {{if .AudioDB.BiographyFR}}
+                <p>{{.AudioDB.BiographyFR}}</p>
+            {{else}}
+                <p>{{.AudioDB.BiographyEN}}</p>
+            {{end}}
+
+            <img src="{{.AudioDB.Thumb}}" alt="Artist image">
+        {{else}}
+            <p>Aucune information supplémentaire disponible.</p>
+        {{end}}
+
     </body>
     <footer>
         <h2 class="footerText">Copyright © 2025 - Tous droits réservés par Noham, Emilien, Tim & Aymeric</h2>

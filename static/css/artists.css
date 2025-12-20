@@ -7,7 +7,7 @@
 #divAllGroups {
     background: #1E2430;
     display: flex; 
-    align-items: center; 
+    align-items: center;
     justify-content: left;
     flex-wrap: wrap; 
     gap: 20px;
