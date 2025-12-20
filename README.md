@@ -1,110 +1,133 @@
+# 🎧 SoundSphère
+
+> **SoundSphère** est une application web interactive qui centralise les informations essentielles sur des artistes et groupes musicaux :
+> biographies, réseaux sociaux, visuels, et **prochains concerts** — le tout en un seul endroit 🌍🎶
+
+Projet réalisé dans le cadre du projet **Groupie Tracker**.
+
 ---
 
-# 🎵 SoundSphère — Groupie Tracker
+## ✨ Fonctionnalités principales
 
-SoundSphère est un projet web développé en Go permettant d’explorer facilement des artistes, leurs concerts, leurs lieux et leurs dates à partir de l’API Groupie Tracker.
-Le site propose une interface moderne, dynamique et agréable, avec un design centré autour de la découverte musicale.
+### 🎤 Artistes
 
----
+* Liste complète des artistes
+* Page dédiée pour chaque artiste
+* Informations générales :
 
-## 🚀 Fonctionnalités
+  * Nom
+  * Genre 🎵
+  * Pays 🌍
+  * Année de création 📅
+  * Premier album 💿
+* Visuels :
 
-### 🎲 Artiste aléatoire
+  * Image principale
+  * Thumbnail
+  * Banner (si disponible)
 
-* Un artiste différent s’affiche à chaque chargement de la page.
-* Bouton **“Tirer un nouvel artiste”** (rechargement actuellement via une requête Go côté serveur).
+### 📖 Biographie
 
-### 👤 Page artiste
+* Biographie récupérée depuis **TheAudioDB**
+* Support FR 🇫🇷 / EN 🇬🇧
+* Affichage optimisé avec bouton *Voir la biographie*
 
-* Affichage détaillé d’un artiste :
+### 🌐 Réseaux sociaux
 
-  * Nom, image, membres
-  * Dates de concerts
-  * Localisations
-  * Informations de l’API Groupie Tracker
+* Liens cliquables vers :
 
-### 📅 Liste des artistes
+  * YouTube ▶️
+  * Instagram 📸
+  * Facebook 📘
+  * Twitter 🐦
+  * Site officiel 🌐
+* Icônes dynamiques (affichées seulement si disponibles)
 
-* Page listant tous les artistes récupérés depuis l’API.
+### 🎟️ Prochains concerts
 
-### 🎤 Page concerts
+* Récupération via l’API **Groupie Tracker**
+* Liste des dates avec :
 
-* Liste des concerts, dates et lieux associés.
+  * 📅 Date
+  * 📍 Lieu
+  * 🏙️ Ville
+* Message automatique si aucun concert n’est prévu
 
-### 💄 Interface moderne
+### 🎲 Page d’accueil
 
-* Hero section avec image d’arrière-plan assombrie
-* Dégradés, text-shadow, boutons cohérents
-* Polices modernes (Orbitron, Exo, etc.)
+* Artiste aléatoire mis en avant
+* Accès rapide à sa page détaillée
+
+### 🌙 Dark Mode
+
+* Mode sombre activé par défaut
+* Structure prête pour un futur toggle utilisateur
 
 ---
 
 ## 🛠️ Technologies utilisées
 
-* **Go (Golang)** — backend, routes et logique serveur
-* **HTML / CSS** — rendu côté client
-* **API Groupie Tracker** — récupération des données
-* **net/http** — serveur web en Go
+* **Go (Golang)** 🐹
+* **HTML / CSS**
+* **Go Templates**
+* **APIs externes** :
+
+  * 🎶 [Groupie Tracker API](https://groupietrackers.herokuapp.com/api)
+  * 🎧 [TheAudioDB API](https://www.theaudiodb.com)
 
 ---
 
-## 📦 Installation
-
-### 1. Cloner le projet
+## 📁 Architecture du projet
 
 ```bash
-git clone https://github.com/Lodgia/Projet_GroupieTracker.git
-cd soundsphere
+.
+├── main.go          # Point d’entrée du serveur
+├── pages.go         # Handlers & logique des pages
+├── artist.go        # API, structs et fusion des données
+├── models.go        # Structs globales
+├── static/
+│   ├── html/        # Templates HTML
+│   ├── css/         # Styles
+│   └── js/          # Scripts JS
 ```
 
-### 2. Lancer le serveur Go
+---
+
+## 🚀 Lancer le projet en local
 
 ```bash
-go run main.go
+go run .
 ```
 
-### 3. Ouvrir dans le navigateur
-
-Accéder au site via :
-➡ [http://localhost:8080](http://localhost:8080)
+Puis ouvrir 👉 **[http://localhost:8080](http://localhost:8080)**
 
 ---
 
-## 📁 Structure du projet
+## 🔮 Fonctionnalités à venir
 
-```
-soundsphere/
-│
-├── static/               # HTML / CSS / images
-│   ├── html/            
-│   ├── css/              
-│   └── img/              
-├── main.go               # Point d'entrée du serveur
-├── api/                  # Récupération & parsing des données Groupie Tracker
-└── README.md             # Documentation
-```
+* 🎧 Lecteur audio intégré (aperçus des musiques)
+* 📍 Carte interactive des concerts
+* 🔍 Recherche avancée par :
 
----
-
-## 🔌 API utilisée
-
-Le projet s’appuie sur :
-➡ **[https://groupietrackers.herokuapp.com/api](https://groupietrackers.herokuapp.com/api)**
+  * Nom
+  * Genre
+  * Pays
+* ❤️ Système de favoris
+* 🌙 Toggle Dark / Light mode
+* ⚡ Cache optimisé des API
 
 ---
 
-## 🧠 Idées d’améliorations futures
+## 👥 Équipe
 
-* 🔄 Charger un artiste aléatoire **sans recharger la page** (fetch AJAX)
-* 🔍 Ajout d’une recherche par artiste
-* 🎨 Mode sombre / mode clair
-* ⚡ Ajouter des animations lors du changement d’artiste
-* 🗺️ Intégration d’une carte interactive pour les concerts
+Projet réalisé par :
+
+* Émilien
+* Tim
+* Aymeric
 
 ---
 
 ## 📜 Licence
 
-Projet réalisé dans le cadre du sujet **Groupie Tracker**.
-
----
+Copyright © 2025 - Tous droits réservés par Émilien, Tim & Aymeric
