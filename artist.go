@@ -11,8 +11,6 @@ import (
 
 var httpClient = &http.Client{Timeout: 5 * time.Second}
 
-// ------------------------- STRUCTURES -------------------------
-
 type Concert struct {
 	Date     string
 	Location string
@@ -57,8 +55,6 @@ type Relation struct {
 	Cities    []string `json:"cities"`
 }
 
-// ------------------------- ARTIST FULL -------------------------
-
 type ArtistFull struct {
 	ID           int
 	Name         string
@@ -67,7 +63,6 @@ type ArtistFull struct {
 	CreationDate int
 	FirstAlbum   string
 
-	// AudioDB
 	Genre        string
 	Country      string
 	BiographyFR  string
@@ -75,7 +70,6 @@ type ArtistFull struct {
 	Thumb        string
 	Banner       string
 
-	// Réseaux sociaux
 	Facebook    string
 	Twitter     string
 	Instagram   string
@@ -84,11 +78,8 @@ type ArtistFull struct {
 	LastFM      string
 	MusicBrainz string
 
-	// Prochains concerts
 	Concerts []Concert
 }
-
-// ------------------------- FETCH FUNCTIONS -------------------------
 
 func FetchGroups() ([]Group, error) {
 	const url = "https://groupietrackers.herokuapp.com/api/artists"
@@ -138,7 +129,6 @@ func FetchAllConcerts() (map[int]Relation, error) {
 		return nil, err
 	}
 
-	// Map index dans le tableau → Relation
 	concertMap := make(map[int]Relation)
 	for i, r := range relations {
 		concertMap[i] = r
@@ -190,7 +180,6 @@ func MergeArtistData(group Group, audio *AudioDBArtist, concertMap map[int]Relat
 		artist.MusicBrainz = audio.MusicBrainz
 	}
 
-	// Ajouter les concerts
 	if rel, ok := concertMap[index]; ok {
 		concerts := make([]Concert, len(rel.Dates))
 		for i := range rel.Dates {

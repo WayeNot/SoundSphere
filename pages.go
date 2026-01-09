@@ -10,9 +10,8 @@ import (
 
 var templates = template.Must(template.ParseGlob("./static/html/*.html"))
 
-// Page pour la liste des artistes
 type ListPage struct {
-	Groups   []ArtistFull // On stocke ArtistFull pour toutes les infos
+	Groups   []ArtistFull
 	Settings Settings
 }
 
@@ -23,12 +22,11 @@ func renderTemplate(w http.ResponseWriter, name string, data any) {
 	}
 }
 
-// Récupérer les infos AudioDB d’un artiste et mettre en cache
 func (app *PageData) GetAudioDBArtist(name string) (*AudioDBArtist, error) {
 	if artist, ok := app.AudioDBCache[name]; ok {
 		return artist, nil
 	}
-	audio, err := FetchAudioDB(name, "123") // Remplacer par ta clé si nécessaire
+	audio, err := FetchAudioDB(name, "123")
 	if err != nil {
 		return nil, err
 	}
@@ -36,22 +34,18 @@ func (app *PageData) GetAudioDBArtist(name string) (*AudioDBArtist, error) {
 	return audio, nil
 }
 
-// Handler général
 func (app *PageData) DisplayPageHandler(pageType string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
-		// --- FETCH concerts une seule fois pour toutes les pages ---
 		allConcerts, _ := FetchAllConcerts()
 
 		switch pageType {
 
-		// --- Page d'accueil ---
 		case "home":
 			group := app.Groups[rand.Intn(len(app.Groups))]
 
 			audio, _ := app.GetAudioDBArtist(group.Name)
 
-			// Trouver index dans le tableau Groups
 			index := -1
 			for i, g := range app.Groups {
 				if g.ID == group.ID {
@@ -67,7 +61,6 @@ func (app *PageData) DisplayPageHandler(pageType string) http.HandlerFunc {
 				Settings: app.Settings,
 			})
 
-		// --- Page d’un artiste ---
 		case "artist":
 			idStr := r.URL.Query().Get("id")
 			if idStr == "" {
@@ -85,7 +78,6 @@ func (app *PageData) DisplayPageHandler(pageType string) http.HandlerFunc {
 
 			audio, _ := app.GetAudioDBArtist(group.Name)
 
-			// Trouver index dans le tableau Groups
 			index := -1
 			for i, g := range app.Groups {
 				if g.ID == id {
@@ -101,7 +93,6 @@ func (app *PageData) DisplayPageHandler(pageType string) http.HandlerFunc {
 				Settings: app.Settings,
 			})
 
-		// --- Liste de tous les artistes ---
 		case "artists":
 			artists := make([]ArtistFull, len(app.Groups))
 			for i, g := range app.Groups {
