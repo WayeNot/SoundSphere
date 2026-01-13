@@ -13,7 +13,8 @@
     gap: 20px;
     padding: 10px;
     margin: 0 auto;
-    width: fit-content;
+    width: full;
+    height: auto;
     border: none;
 }
 
@@ -69,6 +70,11 @@
 
 #filterBar {
     background: #1E2430;
+    display: flex;
+    align-items: center;
+}
+
+#pagination {
     display: flex;
     align-items: center;
 }

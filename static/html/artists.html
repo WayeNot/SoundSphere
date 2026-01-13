@@ -1,66 +1,118 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>Index</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="/static/css/util.css">
-        <link rel="stylesheet" href="/static/css/artists.css">
-    </head>
-    <body>
-        <nav>
-            <div id="imgNav"></div>
 
-            <div id="navCenter">
-                <a class="navMid" href="/">Accueil</a>
-                <a class="navMid" id="activePage" href="/artists">Artistes</a>
-                <a class="navMid" href="/concert">Concerts</a>
-                <a class="navMid" href="/map">Carte</a>
-                <a class="navMid" href="/about">A propos</a>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/css/util.css">
+    <link rel="stylesheet" href="/static/css/artists.css">
+</head>
 
-            <div id="navRight">
-                <input type="text" id="search" placeholder="Rechercher un artiste">
-                {{ if .Settings.DarkMode }}
-                    <a href=""><i class="fa fa-moon"></i></a>
-                {{ else }}
-                    <a href=""><i class="fa fa-sun"></i></a>
-                {{ end }}
-            </div>
-        </nav>
+<body>
+    <nav>
+        <div id="imgNav"></div>
 
-        <div>
-            <div id="filterBar">
-                <h2>Tous les artistes</h2>
-                <div>
-                    <select name="filterArtist" id="filterArtist">
-                        <option value="">Aucun filtre</option>
-                        <option value="alphaAZ">Ordre alphabétique ( A - Z )</option>
-                        <option value="alphaZA">Ordre alphabétique ( Z - A )</option>
-                        <option value="plusVieuxMoinsVieux">Date de création ( Plus vieux - moins vieux )</option>
-                        <option value="moinsVieuxPlusVieux">Date de création ( Moins vieux - plus vieux )</option>
-                    </select>
+        <div id="navCenter">
+            <a class="navMid" href="/">Accueil</a>
+            <a class="navMid" id="activePage" href="/artists">Artistes</a>
+            <a class="navMid" href="/concert">Concerts</a>
+            <a class="navMid" href="/map">Carte</a>
+            <a class="navMid" href="/about">A propos</a>
+        </div>
+
+        <div id="navRight">
+            {{ if .Settings.DarkMode }}
+            <a href=""><i class="fa fa-moon"></i></a>
+            {{ else }}
+            <a href=""><i class="fa fa-sun"></i></a>
+            {{ end }}
+        </div>
+    </nav>
+
+    <div>
+        <div id="filterBar">
+            <h2>Tous les artistes</h2>
+            <form method="GET" action="/artists">
+                <input type="text" name="search" id="search" placeholder="Rechercher un artiste" value="{{.Search}}" />
+                <select name="filterArtist">
+                    <option value="">Aucun filtre</option>
+                    <option value="alphaAZ" {{if eq .Filter "alphaAZ" }}selected{{end}}>Ordre alphabétique ( A - Z )
+                    </option>
+                    <option value="alphaZA" {{if eq .Filter "alphaZA" }}selected{{end}}>Ordre alphabétique ( Z - A )
+                    </option>
+                    <option value="plusVieuxMoinsVieux" {{if eq .Filter "plusVieuxMoinsVieux" }}selected{{end}}>Date de
+                        création ( Plus vieux - moins vieux )</option>
+                    <option value="moinsVieuxPlusVieux" {{if eq .Filter "moinsVieuxPlusVieux" }}selected{{end}}>Date de
+                        création ( Moins vieux - plus vieux )</option>
+                </select>
+                <button type="submit">Appliquer</button>
+            </form>
+        </div>
+        <hr style="width: 70%; margin: 0 auto;">
+        <div id="divAllGroups">
+            {{ if .Groups }}
+            {{ range .Groups }}
+            <div class="divGroup">
+                <img src="{{ .Thumb }}" class="imgGroup" alt="{{ .Name }}">
+                <div style="display: flex; align-items: center; flex-direction: column;">
+                    <p id="artistName">{{.Name}}</p>
+                    <p>Création : {{ .CreationDate }}</p>
+                    <a href="/artist?id={{.ID}}" class="ctaViewPage">Voir la page -></a>
                 </div>
             </div>
-            <hr style="width: 70%; margin: 0 auto;">
-            <div id="divAllGroups">
-                {{range .Groups}}
-                    <div class="divGroup">
-                        <div class="linkGroup">
-                            <img src="{{if .Thumb }} {{ .Thumb }} {{ else }} {{ .Image }} {{ end }}" class="imgGroup" alt="Image du groupe : {{.Name}}">
-                            <div class="infosGroup">
-                                <p id="artistName">{{.Name}}</p>
-                                <p>{{.CreationDate}}</p>
-                            </div>
-                            <a href="/artist?id={{.ID}}" class="ctaViewPage">Voir la page -></a>
-                        </div>
-                    </div>
-                {{end}}
-            </div>
+            {{ end }}
+            {{ else }}
+            <p id="noResult">Aucun artiste trouvé.</p>
+            {{end}}
         </div>
-    </body>
-    <footer>
-        <h2 class="footerText">Copyright © 2025 - Tous droits réservés par Émilien, Tim & Aymeric</h2>
-    </footer>
-    <script>history.replaceState("", "", "SoundSphère");</script>
+        <div id="pagination">
+            <form method="GET" action="/artists">
+                <input type="hidden" name="search" value="{{.Search}}">
+                <input type="hidden" name="filterArtist" value="{{.Filter}}">
+                <input type="hidden" name="perPage" value="{{.PerPage}}">
+            </form>
+            <form method="GET" action="/artists">
+                <input type="hidden" name="search" value="{{.Search}}">
+                <input type="hidden" name="filterArtist" value="{{.Filter}}">
+                <input type="hidden" name="perPage" value="{{.PerPage}}">
+                <input type="hidden" name="page" value="{{.PrevPage}}">
+                {{if gt .PrevPage 0}}
+                <button type="submit">&laquo; Précédent</button>
+                {{end}}
+            </form>
+
+            <form method="GET" action="/artists">
+                <input type="hidden" name="search" value="{{.Search}}">
+                <input type="hidden" name="filterArtist" value="{{.Filter}}">
+                <input type="hidden" name="perPage" value="{{.PerPage}}">
+
+                Page
+                <select name="page" onchange="this.form.submit()">
+                    {{range .PageNumbers}}
+                        <option value="{{.}}" {{if eq $.CurrentPage .}}selected{{end}}>{{.}}</option>
+                    {{end}}
+                </select>
+                sur {{.TotalPages}}
+            </form>
+
+            <form method="GET" action="/artists">
+                <input type="hidden" name="search" value="{{.Search}}">
+                <input type="hidden" name="filterArtist" value="{{.Filter}}">
+                <input type="hidden" name="perPage" value="{{.PerPage}}">
+                <input type="hidden" name="page" value="{{.NextPage}}">
+                {{if gt .NextPage 0}}
+                <button type="submit">Suivant &raquo;</button>
+                {{end}}
+            </form>
+        </div>
+    </div>
+</body>
+<footer>
+    <h2 class="footerText">Copyright © 2025 - Tous droits réservés par Émilien, Tim & Aymeric</h2>
+</footer>
+<script>history.replaceState("", "", "SoundSphère");</script>
+
 </html>
