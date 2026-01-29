@@ -1,4 +1,4 @@
-```markdown
+```
 # 🎵 SoundSphère — GroupieTracker
 
 SoundSphère est une plateforme web qui centralise artistes et concerts du monde entier. Ce projet permet aux utilisateurs de découvrir des artistes, de consulter leurs concerts passés et à venir, et de filtrer facilement les événements selon la ville ou le nom de l’artiste.
