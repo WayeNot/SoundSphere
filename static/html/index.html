@@ -2,65 +2,101 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>Index</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="/static/css/util.css">
-        <link rel="stylesheet" href="/static/css/index.css">    
-
+        <title>SoundSphère — Accueil</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="SoundSphère – Explorez les artistes et concerts du monde entier.">
+        <link rel="stylesheet" href="static/css/index.css">
     </head>
+
     <body>
-        <nav>
-            <div id="imgNav"></div>
 
-            <div id="navCenter">
-                <a class="navMid" id="activePage" href="/">Accueil</a>
-                <a class="navMid" href="/artists">Artistes</a>
-                <a class="navMid" href="/concert">Concerts</a>
-                <a class="navMid" href="/map">Carte</a>
-                <a class="navMid" href="/about">A propos</a>
-            </div>
-
-            <div id="navRight">
-                {{ if .Settings.DarkMode }}
-                    <a href=""><i class="fa fa-moon"></i></a>
-                {{ else }}
-                    <a href=""><i class="fa fa-sun"></i></a>
-                {{ end }}
-            </div>
-        </nav>
-
-        <header>
-            <div id="divTextHeader">
-                <h2>SoundSphère</h2>
-                <p>Le monde des artistes, en un lieu.</p>
-            </div>
-            <div>
-                <a class="ctaBtn"  href="/artists">Voir tous les artistes -></a>
-                <a class="ctaBtn" href="/concert">Les prochains concerts -></a>
-            </div>
-        </header>
-
-        <div id="firstDiv">
-            <div id="randomArtistContainer">
-                <h2 class="sectionTitle">Artiste aléatoire</h2>
-
-                <div id="randomArtistContent">
-                    <img src="{{.Artist.Image}}" id="coverArtist">
-
-                    <div id="artistInfo">
-                        <h1 id="artistName">{{.Artist.Name}}</h1>
-
-                        <div id="artistButtons">
-                            <a class="ctaBtn" href="/artist?id={{.Artist.ID}}">Voir la page -></a>
-                            <a class="ctaBtn" href="/">Tirer un artiste aléatoire</a>
-                        </div>
-                    </div>
+        <div class="navbar">
+            <div class="navbar-wrapper">
+                <div class="logo">SoundSphère</div>
+                <div class="nav-links">
+                    <a href="/">Accueil</a>
+                    <a href="/artists">Artistes</a>
                 </div>
             </div>
         </div>
+
+        <div class="wrapper">
+            <section class="hero">
+                <div class="hero-content">
+                    <span class="hero-badge">Plateforme musicale</span>
+                    <h1>Explorez l’univers<br><span>des artistes et concerts</span></h1>
+                    <p>SoundSphère centralise artistes, concerts et informations musicales dans une expérience claire, moderne et fluide.</p>
+                    <div class="hero-actions">
+                        <a href="/artists" class="btn primary">Explorer les artistes</a>
+                        <a href="/concert" class="btn secondary">Voir les concerts</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Pourquoi SoundSphère ?</h2>
+                <div class="features">
+                    <div class="feature">
+                        <h3>🔍 Recherche avancée</h3>
+                        <p>Trouvez des artistes par nom, nombre de membres ou année de création.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>📅 Concerts détaillés</h3>
+                        <p>Accédez aux dates, lieux et villes des concerts dans le monde entier.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>🎶 Données enrichies</h3>
+                        <p>Genres, biographies, réseaux sociaux et informations musicales.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">En quelques chiffres</h2>
+                <div class="stats">
+                    <div class="stat">
+                        <h3>50+</h3>
+                        <p>Artistes</p>
+                    </div>
+                    <div class="stat">
+                        <h3>100+</h3>
+                        <p>Concerts</p>
+                    </div>
+                    <div class="stat">
+                        <h3>20+</h3>
+                        <p>Pays</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">Artiste à découvrir</h2>
+                <div class="artist-card">
+                    <img src="{{.Artist.Image}}" alt="{{.Artist.Name}}">
+                    <div class="artist-info">
+                        <h3>{{.Artist.Name}}</h3>
+                        <p>Découvrez son parcours, ses membres et ses concerts à venir.</p>
+                        <div class="artist-actions">
+                            <a href="/artist?id={{.Artist.ID}}" class="btn primary">Voir la page</a>
+                            <a href="/" class="btn secondary">Changer d’artiste</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="cta">
+                    <h2>Prêt à explorer la musique autrement ?</h2>
+                    <p>Commencez votre exploration et plongez dans l’univers SoundSphère.</p>
+                    <a href="/artists" class="btn">Découvrir les artistes</a>
+                </div>
+            </section>
+
+        </div>
+
+        <footer>
+            © 2025 – Tous droits réservés par Émilien, Tim & Aymeric
+        </footer>
+
     </body>
-    <footer>
-        <h2 class="footerText">Copyright © 2025 - Tous droits réservés par Émilien, Tim & Aymeric</h2>
-    </footer>
-    <script>history.replaceState("", "", "SoundSphère");</script>
 </html>
