@@ -1,4 +1,3 @@
-```
 # 🎵 SoundSphère — GroupieTracker
 
 SoundSphère est une plateforme web qui centralise artistes et concerts du monde entier. Ce projet permet aux utilisateurs de découvrir des artistes, de consulter leurs concerts passés et à venir, et de filtrer facilement les événements selon la ville ou le nom de l’artiste.
@@ -7,13 +6,13 @@ SoundSphère est une plateforme web qui centralise artistes et concerts du monde
 
 ## 🛠️ Fonctionnalités
 
-- Liste complète des artistes avec informations détaillées (image, biographie, réseaux sociaux).  
-- Page concerts avec filtres interactifs :  
-  - Recherche par artiste ou ville  
-  - Tri automatique par date  
-- Interface moderne et responsive, dans un style sombre et immersif.  
-- Pages entièrement en **Go (Golang)** côté serveur avec **templates HTML/CSS**, sans JavaScript.  
-- Navbar fixe et stylée pour une navigation fluide.  
+- Liste complète des artistes avec informations détaillées (image, biographie, réseaux sociaux)
+- Page concerts avec filtres interactifs :
+  - Recherche par artiste ou ville
+  - Tri automatique par date
+- Interface moderne et responsive, dans un style sombre et immersif
+- Pages entièrement en **Go (Golang)** côté serveur avec **templates HTML/CSS**, sans JavaScript
+- Navbar fixe et stylée pour une navigation fluide
 
 ---
 
@@ -22,12 +21,12 @@ SoundSphère est une plateforme web qui centralise artistes et concerts du monde
 ```
 
 Projet_GroupieTracker/
-├─ main.go              # Point d'entrée du serveur
-├─ concerts.go          # Gestion et affichage des concerts
-├─ artist.go            # Gestion et affichage des artistes
-├─ pages.go             # Handlers des pages principales
-├─ struct.go            # Définition des structures (Concert, Artist, etc.)
-├─ function.go          # Fonctions utilitaires
+├─ main.go             # Point d'entrée du serveur
+├─ concerts.go         # Gestion et affichage des concerts
+├─ artist.go           # Gestion et affichage des artistes
+├─ pages.go            # Handlers des pages principales
+├─ struct.go           # Définition des structures (Concert, Artist, etc.)
+├─ function.go         # Fonctions utilitaires
 ├─ static/
 │  ├─ css/
 │  │  ├─ index.css
@@ -48,7 +47,7 @@ Projet_GroupieTracker/
 
 1. Cloner le dépôt :  
 ```bash
-git clone [https://github.com/Lodgia/Projet_GroupieTracker.git]
+git clone https://github.com/Lodgia/Projet_GroupieTracker.git
 cd Projet_GroupieTracker
 ````
 
@@ -102,4 +101,4 @@ Projet réalisé par :
 
 ## 📜 Licence
 
-Copyright © 2025 - Tous droits réservés par Émilien, Tim & Aymeric
+Copyright © 2025 - Tous droits réservés par Émilien, Tim & Aymeric.
