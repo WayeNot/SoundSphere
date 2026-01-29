@@ -1,104 +1,81 @@
 package main
 
 import (
-	"html/template"
-	"log"
 	"net/http"
-	"sort"
 	"strings"
-	"time"
 )
 
 type ConcertDisplay struct {
-	Date   string
 	Artist string
+	Date   string
 	City   string
 }
 
 type ConcertPage struct {
-	Concerts        []ConcertDisplay
-	Settings        Settings
-	FilterCity      string
-	FilterArtist    string
-	Search          string
-	AvailableCities  []string
+	Concerts         []ConcertDisplay
 	AvailableArtists []string
+	AvailableCities  []string
+	FilterArtist     string
+	FilterCity       string
+	Search           string
 }
 
 func (app *PageData) DisplayConcertsHandler() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		filterCity := r.URL.Query().Get("city")
-		filterArtist := r.URL.Query().Get("artist")
-		search := strings.TrimSpace(r.URL.Query().Get("search"))
+    return func(w http.ResponseWriter, r *http.Request) {
 
-		var concerts []ConcertDisplay
-		citySet := make(map[string]struct{})
-		artistSet := make(map[string]struct{})
+        search := strings.ToLower(r.URL.Query().Get("search"))
+        filterCity := r.URL.Query().Get("city")
+        filterArtist := r.URL.Query().Get("artist")
 
-		for _, g := range app.Groups {
-			artistName := g.Name
-			if _, ok := artistSet[artistName]; !ok {
-				artistSet[artistName] = struct{}{}
-			}
+        concerts := []ConcertDisplay{}
+        artistSet := map[string]struct{}{}
+        citySet := map[string]struct{}{}
 
-			for _, c := range app.AllConcerts[g.ID] {
-				city := c.City
-				if _, ok := citySet[city]; !ok {
-					citySet[city] = struct{}{}
-				}
+        for _, g := range app.Groups {
+            groupConcerts, ok := app.AllConcerts[g.ID]
+            if !ok {
+                continue
+            }
+            for _, c := range groupConcerts {
+                if filterArtist != "" && g.Name != filterArtist {
+                    continue
+                }
+                if filterCity != "" && c.City != filterCity {
+                    continue
+                }
+                if search != "" &&
+                    !strings.Contains(strings.ToLower(g.Name), search) &&
+                    !strings.Contains(strings.ToLower(c.City), search) {
+                    continue
+                }
+                concerts = append(concerts, ConcertDisplay{
+                    Artist: g.Name,
+                    Date:   c.Date,
+                    City:   c.City,
+                })
+                artistSet[g.Name] = struct{}{}
+                citySet[c.City] = struct{}{}
+            }
+        }
 
-				// Filtres
-				if filterCity != "" && !strings.EqualFold(filterCity, city) {
-					continue
-				}
-				if filterArtist != "" && !strings.EqualFold(filterArtist, artistName) {
-					continue
-				}
-				if search != "" && !strings.Contains(strings.ToLower(artistName+" "+city), strings.ToLower(search)) {
-					continue
-				}
+        availableArtists := []string{}
+        for a := range artistSet {
+            availableArtists = append(availableArtists, a)
+        }
+        availableCities := []string{}
+        for c := range citySet {
+            availableCities = append(availableCities, c)
+        }
 
-				concerts = append(concerts, ConcertDisplay{
-					Date:   c.Date,
-					City:   city,
-					Artist: artistName,
-				})
-			}
-		}
+        page := ConcertPage{
+            Concerts:         concerts,
+            AvailableArtists: availableArtists,
+            AvailableCities:  availableCities,
+            FilterArtist:     filterArtist,
+            FilterCity:       filterCity,
+            Search:           search,
+        }
 
-		sort.Slice(concerts, func(i, j int) bool {
-			t1, err1 := time.Parse("02-01-2006", concerts[i].Date)
-			t2, err2 := time.Parse("02-01-2006", concerts[j].Date)
-			if err1 != nil || err2 != nil {
-				return concerts[i].Date > concerts[j].Date
-			}
-			return t2.Before(t1)
-		})
-
-		var cities, artists []string
-		for c := range citySet {
-			cities = append(cities, c)
-		}
-		for a := range artistSet {
-			artists = append(artists, a)
-		}
-		sort.Strings(cities)
-		sort.Strings(artists)
-
-		page := ConcertPage{
-			Concerts:        concerts,
-			Settings:        app.Settings,
-			FilterCity:      filterCity,
-			FilterArtist:    filterArtist,
-			Search:          search,
-			AvailableCities:  cities,
-			AvailableArtists: artists,
-		}
-
-		tmpl := template.Must(template.ParseFiles("./static/html/concerts.html"))
-		if err := tmpl.Execute(w, page); err != nil {
-			log.Println("Template error:", err)
-			http.Error(w, "Internal server error", http.StatusInternalServerError)
-		}
-	}
+        renderTemplate(w, "concerts", page)
+    }
 }

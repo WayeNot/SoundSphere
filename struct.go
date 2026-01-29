@@ -75,11 +75,11 @@ type ArtistFull struct {
 }
 
 type PageData struct {
-	Groups       []Group
-	GroupByID    map[int]Group
-	AllConcerts  map[int][]Concert
-	AudioDBCache map[string]*AudioDBArtist
-	Settings     Settings
+    Groups       []Group
+    GroupByID    map[int]Group
+    AllConcerts  map[int][]Concert
+    AudioDBCache map[string]*AudioDBArtist
+    Settings     Settings
 }
 
 type ListPage struct {
