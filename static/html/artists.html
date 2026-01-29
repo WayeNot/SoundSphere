@@ -1,136 +1,108 @@
-{{/* ============================= */}}
-{{/* ARTISTS.HTML */}}
-{{/* ============================= */}}
-
 <!DOCTYPE html>
 <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Liste des Artistes</title>
+        <meta name="description"content="Découvrez tous vos artistes préférés, triez, filtrez et explorez leurs informations.">
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des Artistes</title>
-    <meta name="description"
-        content="Découvrez tous vos artistes préférés, triez, filtrez et explorez leurs informations.">
-    <style>
-        /* ---------------- BASE ---------------- */
-
-    </style>
-</head>
-
-<body>
-
-    <!-- ================= NAVBAR ================= -->
-    <div class="navbar">
-        <div class="navbar-wrapper">
-            <div class="logo">GroupieTracker</div>
-            <div class="nav-links">
-                <a href="/">Accueil</a>
-                <a href="/artists">Artistes</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- ================= WRAPPER ================= -->
-    <div class="wrapper">
-
-        <!-- ================= FILTRES & RECHERCHE ================= -->
-        <div class="filters">
-            <form method="get">
-                <div class="search-box">
-                    <input type="text" name="search" placeholder="Rechercher un artiste..." value="{{.Search}}">
-                </div>
-
-                <div>
-                    <select name="filterArtist">
-                        <option value="">Trier</option>
-                        <option value="alphaAZ" {{if eq .Filter "alphaAZ" }}selected{{end}}>A → Z</option>
-                        <option value="alphaZA" {{if eq .Filter "alphaZA" }}selected{{end}}>Z → A</option>
-                        <option value="plusVieuxMoinsVieux" {{if eq .Filter "plusVieuxMoinsVieux" }}selected{{end}}>Plus
-                            vieux → Moins vieux</option>
-                        <option value="moinsVieuxPlusVieux" {{if eq .Filter "moinsVieuxPlusVieux" }}selected{{end}}>
-                            Moins vieux → Plus vieux</option>
-                    </select>
-                </div>
-
-                <div>
-                    <button type="submit">Filtrer</button>
-                    {{if or .Search .Filter}}
-                    <a href="/artists"
-                        style="margin-left:5px; padding:5px 10px; background-color:#555; color:#fff; border-radius:5px;">Réinitialiser</a>
-                    {{end}}
-                </div>
-            </form>
-        </div>
-
-        <!-- ================= ARTIST COUNT ================= -->
-        {{if .Search}}
-        <div class="artist-count">{{len .Groups}} artiste(s) trouvé(s) pour "{{.Search}}"</div>
-        {{end}}
-
-        <!-- ================= GRILLE D’ARTISTES ================= -->
-        <div class="artist-grid">
-            {{range .Groups}}
-            <div class="card">
-                {{if .Thumb}}
-                <img src="{{.Thumb}}" alt="Photo de {{.Name}}">
-                {{else}}
-                <div class="skeleton"></div>
-                {{end}}
-                <div class="info">
-                    <h3>{{.Name}}</h3>
-                    <p>Membres: {{len .Members}}</p>
-                    <p>Création: {{.CreationDate}}</p>
-                    <a href="/artist?id={{.ID}}" class="button">Voir l’artiste complet</a>
+    <body>
+        <div class="navbar">
+            <div class="navbar-wrapper">
+                <div class="logo">GroupieTracker</div>
+                <div class="nav-links">
+                    <a href="/">Accueil</a>
+                    <a href="/artists">Artistes</a>
                 </div>
             </div>
-            {{end}}
         </div>
 
-        <!-- ================= PAGINATION ================= -->
-        <div class="pagination">
-            <div class="pages">
-                {{if gt .PrevPage 0}}
-                <a
-                    href="?page={{.PrevPage}}&perPage={{.PerPage}}&filterArtist={{.Filter}}&search={{.Search}}">Précédent</a>
-                {{end}}
+        <div class="wrapper">
+            <div class="filters">
+                <form method="get">
+                    <div class="search-box">
+                        <input type="text" name="search" placeholder="Rechercher un artiste..." value="{{.Search}}">
+                    </div>
 
-                {{range .PageNumbers}}
-                {{if eq . $.CurrentPage}}
-                <span class="current">{{.}}</span>
-                {{else}}
-                <a href="?page={{.}}&perPage={{$.PerPage}}&filterArtist={{$.Filter}}&search={{$.Search}}">{{.}}</a>
-                {{end}}
-                {{end}}
+                    <div>
+                        <select name="filterArtist">
+                            <option value="">Trier</option>
+                            <option value="alphaAZ" {{if eq .Filter "alphaAZ" }}selected{{end}}>A → Z</option>
+                            <option value="alphaZA" {{if eq .Filter "alphaZA" }}selected{{end}}>Z → A</option>
+                            <option value="plusVieuxMoinsVieux" {{if eq .Filter "plusVieuxMoinsVieux" }}selected{{end}}>Plus vieux → Moins vieux</option>
+                            <option value="moinsVieuxPlusVieux" {{if eq .Filter "moinsVieuxPlusVieux" }}selected{{end}}>Moins vieux → Plus vieux</option>
+                        </select>
+                    </div>
 
-                {{if gt .NextPage 0}}
-                <a
-                    href="?page={{.NextPage}}&perPage={{.PerPage}}&filterArtist={{.Filter}}&search={{.Search}}">Suivant</a>
-                {{end}}
-            </div>
-
-            <div class="per-page">
-                <form method="get" style="display:flex; align-items:center; gap:5px;">
-                    <label for="perPage">Artistes par page:</label>
-                    <select name="perPage" id="perPage" onchange="this.form.submit()">
-                        <option value="5" {{if eq .PerPage 5}}selected{{end}}>5</option>
-                        <option value="10" {{if eq .PerPage 10}}selected{{end}}>10</option>
-                        <option value="20" {{if eq .PerPage 20}}selected{{end}}>20</option>
-                        <option value="50" {{if eq .PerPage 50}}selected{{end}}>50</option>
-                    </select>
-                    <input type="hidden" name="page" value="{{.CurrentPage}}">
-                    <input type="hidden" name="filterArtist" value="{{.Filter}}">
-                    <input type="hidden" name="search" value="{{.Search}}">
+                    <div>
+                        <button type="submit">Filtrer</button>
+                        {{if or .Search .Filter}}
+                            <a href="/artists" style="margin-left:5px; padding:5px 10px; background-color:#555; color:#fff; border-radius:5px;">Réinitialiser</a>
+                        {{end}}
+                    </div>
                 </form>
             </div>
+
+            {{if .Search}}
+            <div class="artist-count">{{len .Groups}} artiste(s) trouvé(s) pour "{{.Search}}"</div>
+            {{end}}
+
+            <div class="artist-grid">
+                {{range .Groups}}
+                <div class="card">
+                    {{if .Thumb}}
+                        <img src="{{.Thumb}}" alt="Photo de {{.Name}}">
+                    {{else}}
+                        <div class="skeleton"></div>
+                    {{end}}
+                    <div class="info">
+                        <h3>{{.Name}}</h3>
+                        <p>Membres: {{len .Members}}</p>
+                        <p>Création: {{.CreationDate}}</p>
+                        <a href="/artist?id={{.ID}}" class="button">Voir l’artiste complet</a>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+
+            <div class="pagination">
+                <div class="pages">
+                    {{if gt .PrevPage 0}}
+                        <a href="?page={{.PrevPage}}&perPage={{.PerPage}}&filterArtist={{.Filter}}&search={{.Search}}">Précédent</a>
+                    {{end}}
+
+                    {{range .PageNumbers}}
+                    {{if eq . $.CurrentPage}}
+                        <span class="current">{{.}}</span>
+                    {{else}}
+                        <a href="?page={{.}}&perPage={{$.PerPage}}&filterArtist={{$.Filter}}&search={{$.Search}}">{{.}}</a>
+                    {{end}}
+                    {{end}}
+
+                    {{if gt .NextPage 0}}
+                        <a href="?page={{.NextPage}}&perPage={{.PerPage}}&filterArtist={{.Filter}}&search={{.Search}}">Suivant</a>
+                    {{end}}
+                </div>
+
+                <div class="per-page">
+                    <form method="get" style="display:flex; align-items:center; gap:5px;">
+                        <label for="perPage">Artistes par page:</label>
+                        <select name="perPage" id="perPage" onchange="this.form.submit()">
+                            <option value="5" {{if eq .PerPage 5}}selected{{end}}>5</option>
+                            <option value="10" {{if eq .PerPage 10}}selected{{end}}>10</option>
+                            <option value="20" {{if eq .PerPage 20}}selected{{end}}>20</option>
+                            <option value="50" {{if eq .PerPage 50}}selected{{end}}>50</option>
+                        </select>
+                        <input type="hidden" name="page" value="{{.CurrentPage}}">
+                        <input type="hidden" name="filterArtist" value="{{.Filter}}">
+                        <input type="hidden" name="search" value="{{.Search}}">
+                    </form>
+                </div>
+            </div>
+
         </div>
+        <footer style="position: fixed; bottom: 0; left: 0; width: 100%; background-color:#1e1e1e; color:#ff4500; text-align:center; padding:15px 0; font-size:0.9em;">&copy; 2025 - Tous droits réservés par Émilien, Tim & Aymeric</footer>
 
-    </div>
-    <footer
-        style="position: fixed; bottom: 0; left: 0; width: 100%; background-color:#1e1e1e; color:#ff4500; text-align:center; padding:15px 0; font-size:0.9em;">
-        &copy; 2025 - Tous droits réservés par Émilien, Tim & Aymeric
-    </footer>
-
-
-</body>
-
+    </body>
 </html>
