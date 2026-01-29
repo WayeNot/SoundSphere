@@ -1,113 +1,145 @@
-
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="/static/css/util.css">
-        <link rel="stylesheet" href="/static/css/artist.css">
-    </head>
-    <body>
-        <nav>
-            <div id="imgNav"></div>
+<html lang="fr">
 
-            <div id="navCenter">
-                <a class="navMid" id="activePage" href="/">Accueil</a>
-                <a class="navMid" href="/artists">Artistes</a>
-                <a class="navMid" href="/concert">Concerts</a>
-                <a class="navMid" href="/map">Carte</a>
-                <a class="navMid" href="/about">A propos</a>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Artist.Name}} - SoundSphère</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/css/artist.css?v=2">
+</head>
 
-            <div id="navRight">
-                {{ if .Settings.DarkMode }}
-                    <a href=""><i class="fa fa-moon"></i></a>
-                {{ else }}
-                    <a href=""><i class="fa fa-sun"></i></a>
-                {{ end }}
-            </div>
-        </nav>
+<body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="navbar-wrapper">
+            <div class="logo">SoundSphère</div>
+            <nav class="nav-links">
+                <a href="/">Accueil</a>
+                <a href="/artists">Artistes</a>
+            </nav>
+        </div>
+    </header>
 
-        <div style="background: #1F2730;">
-                <div style="padding-top: 30px;"></div>
-            {{ if .Artist.Banner}}
-                <img src="{{.Artist.Banner}}" id="bannerArtist" alt="">
-            {{ else }}
-                <div id="headerArtist"></div>
-            {{ end }}
-            <div id="divPresArtist">
-                <hr id="firstSep">
-                <div id="divInfoArtist">
-                    <img id="logoArtist" src="{{if .Artist.Thumb }} {{ .Artist.Thumb }} {{ else }} {{ .Artist.Image }} {{ end }}" alt="Image du groupe : {{ .Artist.Name }}">
-                    <div id="divInfoArtist2">
-                        <div>
-                            <h1 id="artistName">{{.Artist.Name}}</h1>
-                            <div id="infoArtist">
-                                <p>🎵 <span>Genre</span> : {{ .Artist.Genre }}</p>
-                                <p>🌍 <span>Pays</span> : {{ .Artist.Country }}</p>
-                                <p>📅 <span>Création</span> : {{ .Artist.CreationDate }}</p>
-                                <p>💿 <span>Premier album</span> : {{ .Artist.FirstAlbum }}</p>
-                            </div>
-                        </div>
-                        {{ if or .Artist.Youtube .Artist.Instagram .Artist.Facebook .Artist.Website }}
-                            <hr id="secondSep">
-                            <div id="divSocialMedia">
-                                {{ if .Artist.Youtube }}
-                                    <a href="{{ .Artist.Youtube }}" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-                                {{ end }}
-                                {{ if .Artist.Instagram }}
-                                    <a href="{{ .Artist.Instagram }}" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                                {{ end }}
+    <!-- MAIN -->
+    <main class="artist-page">
+        <!-- BANNIERE -->
+        {{ if .Artist.Banner }}
+        <div class="artist-banner">
+            <img src="{{.Artist.Banner}}" alt="Bannière de {{.Artist.Name}}">
+        </div>
+        {{ else }}
+        <div class="artist-banner placeholder"></div>
+        {{ end }}
 
-                                {{ if .Artist.Facebook }}
-                                    <a href="http://{{ .Artist.Facebook }}" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-                                {{ end }}
-                                {{ if .Artist.Website }}
-                                    <a href="{{ .Artist.Website }}" target="_blank"><i class="fa fa-globe"></i></a>
-                                {{ end }}
-                            </div>
+        <!-- INFO ARTISTE -->
+        <section class="artist-info-section">
+            <div class="artist-info-card">
+                <img src="{{if .Artist.Thumb}}{{.Artist.Thumb}}{{else}}{{.Image.Thumb}}{{end}}" alt="Image de {{.Artist.Name}}">
+                <div class="artist-details">
+                    <h1 class="artist-name">{{.Artist.Name}}</h1>
+                    <div class="artist-meta">
+                        <p>🎵 <strong>Genre :</strong> {{.Artist.Genre}}</p>
+                        <p>🌍 <strong>Pays :</strong> {{.Artist.Country}}</p>
+                        <p>📅 <strong>Création :</strong> {{.Artist.CreationDate}}</p>
+                        <p>💿 <strong>Premier album :</strong> {{.Artist.FirstAlbum}}</p>
+                    </div>
+
+                    <!-- RESEAUX SOCIAUX -->
+                    {{ if or .Artist.Youtube .Artist.Instagram .Artist.Facebook .Artist.Website }}
+                    <div class="artist-socials">
+                        {{ if .Artist.Youtube }}
+                        <a href="{{ .Artist.Youtube }}" target="_blank" aria-label="YouTube"><i
+                                class="fa-brands fa-youtube"></i></a>
+                        {{ end }}
+                        {{ if .Artist.Instagram }}
+                        <a href="{{ .Artist.Instagram }}" target="_blank" aria-label="Instagram"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        {{ end }}
+                        {{ if .Artist.Facebook }}
+                        <a href="http://{{ .Artist.Facebook }}" target="_blank" aria-label="Facebook"><i
+                                class="fa-brands fa-facebook-f"></i></a>
+                        {{ end }}
+                        {{ if .Artist.Website }}
+                        <a href="{{ .Artist.Website }}" target="_blank" aria-label="Site web"><i
+                                class="fa fa-globe"></i></a>
                         {{ end }}
                     </div>
-                </div>
-                <hr id="fourthSep">
-                <div id="divBio">
-                    {{ if .Artist.BiographyFR }}
-                        <button class="ctaBtn" id="btnSeeBio" onclick="viewBiographie()">Voir la biographie</button>
-                    {{ else }}
-                        <p class="noData">Aucune biographie pour cet artiste !</p>
                     {{ end }}
                 </div>
-
-                <hr id="fifthSep">
-
-                <div id="divConcert" style="">
-                    <h2>Prochains concerts</h2>
-                    {{ if .Artist.Concerts }}
-                        <ul>
-                        {{ range .Artist.Concerts }}
-                            <li>{{ .Date }} — {{ .Location }}, {{ .City }}</li>
-                        {{ end }}
-                        </ul>
-                    {{ else }}
-                        <p>Aucun concert prévu pour le moment.</p>
-                    {{ end }}
-                </div>
-              
             </div>
+        </section>
 
-            <div id="bioOverlay"></div>
+        <!-- BIOGRAPHIE -->
+        <section class="artist-bio-section">
+            {{ if .Artist.BiographyFR }}
+            <button class="ctaBtn" id="btnSeeBio">Voir la biographie</button>
+            {{ else }}
+            <p class="noData">Aucune biographie disponible pour cet artiste.</p>
+            {{ end }}
+        </section>
 
-            <div id="bioScreen" role="dialog" aria-modal="true" aria-labelledby="bioTitle" aria-describedby="bioContent">
-                <h2 id="bioTitle">{{.Artist.Name}} | Biographie</h2>
-                <p id="bioContent">{{.Artist.BiographyFR}}</p>
-                <button class="ctaBtn" onclick="closeBio()">Fermer</button>
-            </div>
+        <!-- CONCERTS -->
+        <section class="artist-concert-section">
+            <h2>Prochains concerts</h2>
+            {{if .Artist.Concerts}}
+            <ul>
+                {{range .Artist.Concerts}}
+                <li>
+                    <strong>{{.Date}}</strong>- {{.City}} ({{.Location}})
+                </li>
+                {{end}}
+            </ul>
+            {{else}}
+            <p class="noData">Aucun concert programmé pour le moment.</p>
+            {{end}}
+        </section>
+
+
+        <!-- MODAL BIO -->
+        <div id="bioOverlay" class="overlay"></div>
+
+        <div id="bioScreen" class="bio-modal" role="dialog" aria-modal="true" aria-labelledby="bioTitle"
+            aria-describedby="bioContent">
+            <h2 id="bioTitle">{{.Artist.Name}} | Biographie</h2>
+            <p id="bioContent">{{.Artist.BiographyFR}}</p>
+            <button class="ctaBtn" id="btnCloseBio">Fermer</button>
         </div>
-    </body>
+    </main>
+
+    <!-- FOOTER -->
     <footer>
-        <h2 class="footerText">Copyright © 2025 - Tous droits réservés par Émilien, Tim & Aymeric</h2>
+        <p class="footer-text">Copyright © 2025 - Tous droits réservés par Émilien, Tim & Aymeric</p>
     </footer>
-    <script>history.replaceState("", "", "SoundSphère");</script>
+
+    <!-- SCRIPT -->
+    <script>
+        // NE PAS AFFICHER LA BIO PAR DEFAUT
+        const btnSeeBio = document.getElementById("btnSeeBio");
+        const btnCloseBio = document.getElementById("btnCloseBio");
+        const bioOverlay = document.getElementById("bioOverlay");
+        const bioScreen = document.getElementById("bioScreen");
+
+        if (btnSeeBio) {
+            btnSeeBio.addEventListener("click", () => {
+                bioOverlay.style.display = "block";
+                bioScreen.style.display = "flex"; // flex pour centrer le modal
+            });
+        }
+
+        btnCloseBio.addEventListener("click", () => {
+            bioOverlay.style.display = "none";
+            bioScreen.style.display = "none";
+        });
+
+        // fermer modal si clique sur overlay
+        bioOverlay.addEventListener("click", () => {
+            bioOverlay.style.display = "none";
+            bioScreen.style.display = "none";
+        });
+    </script>
+</body>
+
 </html>
