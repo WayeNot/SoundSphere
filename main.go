@@ -8,49 +8,41 @@ import (
 )
 
 func main() {
-	// Initialisation aléatoire pour choisir un artiste aléatoire
 	rand.Seed(time.Now().UnixNano())
 
-	// Récupération des groupes depuis l'API GroupieTracker
 	groups, err := FetchGroups()
 	if err != nil {
-		log.Fatal("Erreur API GroupieTracker:", err)
+		log.Fatal("❌ Erreur API GroupieTracker:", err)
 	}
 
-	// Map pour accéder rapidement aux groupes par ID
 	groupMap := make(map[int]Group, len(groups))
 	for _, g := range groups {
 		groupMap[g.ID] = g
 	}
 
-	// Structure principale de l'application
+	allConcerts, err := FetchAllConcerts()
+	if err != nil {
+		log.Println("⚠ Impossible de récupérer les concerts:", err)
+		allConcerts = make(map[int][]Concert)
+	}
+
 	app := &PageData{
 		Groups:       groups,
 		GroupByID:    groupMap,
+		AllConcerts:  allConcerts,
 		AudioDBCache: make(map[string]*AudioDBArtist),
 		Settings:     Settings{DarkMode: true},
 	}
 
-	// --- SERVEUR HTTP ---
-
-	// Servir les fichiers statiques
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	// Routes principales
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		switch r.URL.Path {
-		case "/":
-			app.DisplayPageHandler("home")(w, r)
-		case "/artist":
-			app.DisplayPageHandler("artist")(w, r)
-		case "/artists":
-			app.DisplayPageHandler("artists")(w, r)
-		default:
-			http.NotFound(w, r)
-		}
-	})
+	http.HandleFunc("/", app.DisplayPageHandler("home"))
+	http.HandleFunc("/artists", app.DisplayPageHandler("artists"))
+	http.HandleFunc("/artist", app.DisplayPageHandler("artist"))
 
-	log.Println("✅ Serveur lancé sur http://localhost:8000")
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	http.HandleFunc("/concerts", app.DisplayConcertsHandler())
+
+	log.Println("✅ Serveur lancé sur http://localhost:8081")
+	log.Fatal(http.ListenAndServe(":8081", nil))
 }

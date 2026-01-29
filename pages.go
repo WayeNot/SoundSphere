@@ -11,8 +11,6 @@ import (
 
 var templates = template.Must(template.ParseGlob("./static/html/*.html"))
 
-// ---------------- TEMPLATE ----------------
-
 func renderTemplate(w http.ResponseWriter, name string, data any) {
 	if err := templates.ExecuteTemplate(w, name+".html", data); err != nil {
 		log.Println("Template error:", err)
@@ -20,13 +18,11 @@ func renderTemplate(w http.ResponseWriter, name string, data any) {
 	}
 }
 
-// ---------------- AUDIO DB ----------------
-
 func (app *PageData) GetAudioDBArtist(name string) (*AudioDBArtist, error) {
 	if artist, ok := app.AudioDBCache[name]; ok {
 		return artist, nil
 	}
-	audio, err := FetchAudioDB(name, "123") // Clé API AudioDB
+	audio, err := FetchAudioDB(name, "123")
 	if err != nil {
 		return nil, err
 	}
@@ -34,39 +30,27 @@ func (app *PageData) GetAudioDBArtist(name string) (*AudioDBArtist, error) {
 	return audio, nil
 }
 
-// ---------------- HANDLER ----------------
-
 func (app *PageData) DisplayPageHandler(pageType string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		allConcerts, _ := FetchAllConcerts() // Récupération des concerts
+
+		allConcerts, _ := FetchAllConcerts()
 
 		switch pageType {
-
-		// ---------------- HOME ----------------
 		case "home":
 			if len(app.Groups) == 0 {
 				http.Error(w, "Aucun artiste disponible", http.StatusInternalServerError)
 				return
 			}
 
-			group := app.Groups[rand.Intn(len(app.Groups))] // Artiste aléatoire
+			group := app.Groups[rand.Intn(len(app.Groups))]
 			audio, _ := app.GetAudioDBArtist(group.Name)
+			artist := MergeArtistData(group, audio, allConcerts, group.ID)
 
-			index := -1
-			for i, g := range app.Groups {
-				if g.ID == group.ID {
-					index = i
-					break
-				}
-			}
-
-			artist := MergeArtistData(group, audio, allConcerts, index)
 			renderTemplate(w, "index", ArtistPage{
 				Artist:   artist,
 				Settings: app.Settings,
 			})
 
-		// ---------------- ARTIST ----------------
 		case "artist":
 			idStr := r.URL.Query().Get("id")
 			if idStr == "" {
@@ -87,24 +71,14 @@ func (app *PageData) DisplayPageHandler(pageType string) http.HandlerFunc {
 			}
 
 			audio, _ := app.GetAudioDBArtist(group.Name)
+			artist := MergeArtistData(group, audio, allConcerts, id)
 
-			index := -1
-			for i, g := range app.Groups {
-				if g.ID == id {
-					index = i
-					break
-				}
-			}
-
-			artist := MergeArtistData(group, audio, allConcerts, index)
 			renderTemplate(w, "artist", ArtistPage{
 				Artist:   artist,
 				Settings: app.Settings,
 			})
 
-		// ---------------- ARTISTS ----------------
 		case "artists":
-			// Paramètres GET
 			filter := r.URL.Query().Get("filterArtist")
 			search := r.URL.Query().Get("search")
 
@@ -122,17 +96,15 @@ func (app *PageData) DisplayPageHandler(pageType string) http.HandlerFunc {
 				}
 			}
 
-			// Merge et filtre
 			allArtists := make([]ArtistFull, 0, len(app.Groups))
-			for i, g := range app.Groups {
+			for _, g := range app.Groups {
 				if search != "" && !strings.Contains(strings.ToLower(g.Name), strings.ToLower(search)) {
 					continue
 				}
 				audio, _ := app.GetAudioDBArtist(g.Name)
-				allArtists = append(allArtists, MergeArtistData(g, audio, allConcerts, i))
+				allArtists = append(allArtists, MergeArtistData(g, audio, allConcerts, g.ID))
 			}
 
-			// Trier
 			switch filter {
 			case "alphaAZ":
 				SortArtistsAZ(allArtists)
@@ -144,7 +116,6 @@ func (app *PageData) DisplayPageHandler(pageType string) http.HandlerFunc {
 				SortArtistsNewToOld(allArtists)
 			}
 
-			// Pagination
 			total := len(allArtists)
 			totalPages := (total + perPage - 1) / perPage
 			if totalPages == 0 {
@@ -159,12 +130,10 @@ func (app *PageData) DisplayPageHandler(pageType string) http.HandlerFunc {
 
 			start := (page - 1) * perPage
 			end := start + perPage
-			if start > total {
-				start = 0
-			}
 			if end > total {
 				end = total
 			}
+
 			pagedArtists := allArtists[start:end]
 
 			pageNumbers := make([]int, totalPages)
@@ -176,6 +145,7 @@ func (app *PageData) DisplayPageHandler(pageType string) http.HandlerFunc {
 			if page > 1 {
 				prevPage = page - 1
 			}
+
 			nextPage := 0
 			if page < totalPages {
 				nextPage = page + 1

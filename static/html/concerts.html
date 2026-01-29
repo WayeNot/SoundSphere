@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Concerts</title>
+<link rel="stylesheet" href="/static/css/concerts.css">
+</head>
+<body>
+<div class="container">
+    <h1>Concerts</h1>
+
+    <form class="filters" method="get">
+        <input type="text" name="search" placeholder="Rechercher artiste ou ville..." value="{{.Search}}">
+        <select name="city" onchange="this.form.submit()">
+            <option value="">Toutes les villes</option>
+            {{range .AvailableCities}}
+            <option value="{{.}}" {{if eq $.FilterCity .}}selected{{end}}>{{.}}</option>
+            {{end}}
+        </select>
+
+        <select name="artist" onchange="this.form.submit()">
+            <option value="">Tous les artistes</option>
+            {{range .AvailableArtists}}
+            <option value="{{.}}" {{if eq $.FilterArtist .}}selected{{end}}>{{.}}</option>
+            {{end}}
+        </select>
+    </form>
+
+    {{if not .Concerts}}
+    <div class="no-concert">Aucun concert trouvé.</div>
+    {{else}}
+    <div class="concert-list">
+        {{range .Concerts}}
+        <div class="concert-card">
+            <h3>{{.Artist}}</h3>
+            <p><strong>Date:</strong> {{.Date}}</p>
+            <p><strong>Ville:</strong> {{.City}}</p>
+        </div>
+        {{end}}
+    </div>
+    {{end}}
+</div>
+</body>
+</html>

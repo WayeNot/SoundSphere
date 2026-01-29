@@ -1,20 +1,14 @@
 package main
 
-// ---------------- SETTINGS ----------------
-
 type Settings struct {
 	DarkMode bool
 }
-
-// ---------------- CONCERTS ----------------
 
 type Concert struct {
 	Date     string
 	Location string
 	City     string
 }
-
-// ---------------- GROUP / ARTIST ----------------
 
 type Group struct {
 	ID           int      `json:"id"`
@@ -24,8 +18,6 @@ type Group struct {
 	CreationDate int      `json:"creationDate"`
 	FirstAlbum   string   `json:"firstAlbum"`
 }
-
-// ---------------- AUDIO DB ----------------
 
 type AudioDBArtist struct {
 	Name        string `json:"strArtist"`
@@ -49,16 +41,12 @@ type AudioDBResponse struct {
 	Artists []AudioDBArtist `json:"artists"`
 }
 
-// ---------------- RELATIONS / CONCERTS ----------------
-
 type Relation struct {
 	ID        int      `json:"id"`
 	Dates     []string `json:"dates"`
 	Locations []string `json:"locations"`
 	Cities    []string `json:"cities"`
 }
-
-// ---------------- ARTIST FULL (MERGE) ----------------
 
 type ArtistFull struct {
 	ID           int
@@ -86,16 +74,13 @@ type ArtistFull struct {
 	Concerts []Concert
 }
 
-// ---------------- PAGE DATA ----------------
-
 type PageData struct {
 	Groups       []Group
 	GroupByID    map[int]Group
+	AllConcerts  map[int][]Concert
 	AudioDBCache map[string]*AudioDBArtist
 	Settings     Settings
 }
-
-// ---------------- LIST PAGE (PAGINATION) ----------------
 
 type ListPage struct {
 	Groups      []ArtistFull
@@ -109,8 +94,6 @@ type ListPage struct {
 	PrevPage    int
 	NextPage    int
 }
-
-// ---------------- ARTIST PAGE ----------------
 
 type ArtistPage struct {
 	Artist   ArtistFull
