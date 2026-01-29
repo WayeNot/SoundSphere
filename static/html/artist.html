@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Artist.Name}} - SoundSphère</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/css/artist.css?v=2">
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-wrapper">
+            <div class="logo">SoundSphère</div>
+            <div class="nav-links">
+                <a href="/">Accueil</a>
+                <a href="/artists">Artistes</a>
+                <a href="/concerts">Prochains concerts</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="artist-page">
+        {{ if .Artist.Banner }}
+        <div class="artist-banner">
+            <img src="{{.Artist.Banner}}" alt="Bannière de {{.Artist.Name}}">
+        </div>
+        {{ else }}
+        <div class="artist-banner placeholder"></div>
+        {{ end }}
+
+        <section class="artist-info-section">
+            <div class="artist-info-card">
+                <img src="{{if .Artist.Thumb}}{{.Artist.Thumb}}{{else}}{{.Image.Thumb}}{{end}}"
+                    alt="Image de {{.Artist.Name}}">
+                <div class="artist-details">
+                    <h1 class="artist-name">{{.Artist.Name}}</h1>
+                    <div class="artist-meta">
+                        <p>🎵 <strong>Genre :</strong> {{.Artist.Genre}}</p>
+                        <p>🌍 <strong>Pays :</strong> {{.Artist.Country}}</p>
+                        <p>📅 <strong>Création :</strong> {{.Artist.CreationDate}}</p>
+                        <p>💿 <strong>Premier album :</strong> {{.Artist.FirstAlbum}}</p>
+                    </div>
+
+                    {{ if or .Artist.Youtube .Artist.Instagram .Artist.Facebook .Artist.Website }}
+                    <div class="artist-socials">
+                        {{ if .Artist.Youtube }}
+                        <a href="{{ .Artist.Youtube }}" target="_blank" aria-label="YouTube"><i
+                                class="fa-brands fa-youtube"></i></a>
+                        {{ end }}
+                        {{ if .Artist.Instagram }}
+                        <a href="{{ .Artist.Instagram }}" target="_blank" aria-label="Instagram"><i
+                                class="fa-brands fa-instagram"></i></a>
+                        {{ end }}
+                        {{ if .Artist.Facebook }}
+                        <a href="http://{{ .Artist.Facebook }}" target="_blank" aria-label="Facebook"><i
+                                class="fa-brands fa-facebook-f"></i></a>
+                        {{ end }}
+                        {{ if .Artist.Website }}
+                        <a href="{{ .Artist.Website }}" target="_blank" aria-label="Site web"><i
+                                class="fa fa-globe"></i></a>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+        </section>
+
+        <section class="artist-bio-section">
+            {{ if .Artist.BiographyFR }}
+            <button class="ctaBtn" id="btnSeeBio">Voir la biographie</button>
+            {{ else }}
+            <p class="noData">Aucune biographie disponible pour cet artiste.</p>
+            {{ end }}
+        </section>
+
+        <section class="artist-concert-section">
+            <h2>Prochains concerts</h2>
+            {{if .Artist.Concerts}}
+            <ul>
+                {{range .Artist.Concerts}}
+                <li><strong>{{.Date}}</strong>- {{.City}} ({{.Location}})</li>
+                {{end}}
+            </ul>
+            {{else}}
+            <p class="noData">Aucun concert programmé pour le moment.</p>
+            {{end}}
+        </section>
+
+        <div id="bioOverlay" class="overlay"></div>
+
+        <div id="bioScreen" class="bio-modal" role="dialog" aria-modal="true" aria-labelledby="bioTitle"
+            aria-describedby="bioContent">
+            <h2 id="bioTitle">{{.Artist.Name}} | Biographie</h2>
+            <p id="bioContent">{{.Artist.BiographyFR}}</p>
+            <button class="ctaBtn" id="btnCloseBio">Fermer</button>
+        </div>
+    </main>
+
+    <footer>
+        <p class="footer-text">Copyright © 2025 - Tous droits réservés par Émilien, Tim & Aymeric</p>
+    </footer>
+
+    <script>
+        const btnSeeBio = document.getElementById("btnSeeBio");
+        const btnCloseBio = document.getElementById("btnCloseBio");
+        const bioOverlay = document.getElementById("bioOverlay");
+        const bioScreen = document.getElementById("bioScreen");
+
+        if (btnSeeBio) {
+            btnSeeBio.addEventListener("click", () => {
+                bioOverlay.style.display = "block";
+                bioScreen.style.display = "flex";
+            });
+        }
+
+        btnCloseBio.addEventListener("click", () => {
+            bioOverlay.style.display = "none";
+            bioScreen.style.display = "none";
+        });
+
+        bioOverlay.addEventListener("click", () => {
+            bioOverlay.style.display = "none";
+            bioScreen.style.display = "none";
+        });
+    </script>
+</body>
+
+</html>
