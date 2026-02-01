@@ -4,6 +4,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -40,9 +41,13 @@ func main() {
 	http.HandleFunc("/", app.DisplayPageHandler("home"))
 	http.HandleFunc("/artists", app.DisplayPageHandler("artists"))
 	http.HandleFunc("/artist", app.DisplayPageHandler("artist"))
-
 	http.HandleFunc("/concerts", app.DisplayConcertsHandler())
 
-	log.Println("✅ Serveur lancé sur http://localhost:8081")
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8081"
+	}
+
+	log.Println("✅ Serveur lancé sur le port", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
